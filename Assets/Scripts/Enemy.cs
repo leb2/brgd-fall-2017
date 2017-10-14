@@ -2,13 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-
+public enum Color { Red, Blue, Green };
 
 public class Enemy : MonoBehaviour
 {
-
-    public enum Color { Red, Blue, Green };
-	
 	// Maps each color the color that it has advantage over
 	private IDictionary<Color, Color> advantageCircle;
 	
@@ -19,8 +16,7 @@ public class Enemy : MonoBehaviour
 	private float currentHealth;
 
 	// Use this for initialization
-	void Start ()
-	{
+	void Start () {
 		this.currentHealth = this.maxHealth;
 
 		this.advantageCircle = new Dictionary<Color, Color>()
@@ -36,16 +32,23 @@ public class Enemy : MonoBehaviour
 		
 	}
 	
-	float damageMultiplier(float baseDamage, Color sourceColor)
+	public void takeDamage(float baseDamage, Color sourceColor)
 	{
+		Debug.Log("Taking damage: " + baseDamage);
+		Debug.Log("Health remaining: " + this.currentHealth);
+		float damage;
 		if (this.color == sourceColor) {
-			return baseDamage;
-			
+			damage = baseDamage;
 		} else if (this.advantageCircle[sourceColor] == this.color) {
-			return baseDamage * this.advantageFactor;
+			damage = baseDamage * this.advantageFactor;
 			
 		} else {
-			return baseDamage / this.advantageFactor;
+			damage = baseDamage / this.advantageFactor;
+		}
+
+		this.currentHealth -= damage;
+		if (this.currentHealth <= 0) {
+			Destroy(this.gameObject);
 		}
 	}
 }

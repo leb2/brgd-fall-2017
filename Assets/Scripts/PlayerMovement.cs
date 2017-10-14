@@ -21,7 +21,6 @@ public class PlayerMovement : MonoBehaviour {
 		rigidbody = GetComponent<Rigidbody2D>();
 		Collider2D collider = GetComponent<Collider2D>();
 		distToGround = collider.bounds.extents.y;
-		Debug.Log("Distance to ground " + distToGround.ToString());
 	}
 
 	private bool IsGrounded()

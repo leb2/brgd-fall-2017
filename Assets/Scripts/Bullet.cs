@@ -21,7 +21,6 @@ public class Bullet : MonoBehaviour
 	
 	void OnCollisionEnter2D(Collision2D other)
 	{
-		Debug.Log("Colliding with something");
 		if (other.gameObject.CompareTag("Enemy"))
 		{
             Enemy otherEnemy = (Enemy) other.gameObject.GetComponent(typeof(Enemy));

@@ -9,14 +9,14 @@ public enum Color { Red, Blue, Green };
 public class Enemy : MonoBehaviour
 {
 	// Maps each color the color that it has advantage over
-	private IDictionary<Color, Color> advantageCircle;
+	private IDictionary<Color, Color> _advantageCircle;
 	
-	public Color color;
-	public float maxHealth = 50F;
-	public float advantageFactor = 2F;
+	public Color Color;
+	public float MaxHealth = 50F;
+	public float AdvantageFactor = 2F;
+	public int NumAmmoDrop = 3;
 
-	private float currentHealth;
-
+<<<<<<< HEAD
 	public GameObject bullet;
 
 	private Rigidbody2D rigidbody;
@@ -27,11 +27,16 @@ public class Enemy : MonoBehaviour
 	int MaxDist = 10;
 	int MinDist = 20;
 
+=======
+	private float _currentHealth;
+	public GameObject Ammo;
+	
+>>>>>>> Add ammo drops
 	// Use this for initialization
 	void Start () {
-		this.currentHealth = this.maxHealth;
+		this._currentHealth = this.MaxHealth;
 
-		this.advantageCircle = new Dictionary<Color, Color>()
+		this._advantageCircle = new Dictionary<Color, Color>()
 		{
 			{Color.Red, Color.Green},
 			{Color.Green, Color.Blue},
@@ -57,23 +62,32 @@ public class Enemy : MonoBehaviour
 	public void takeDamage(float baseDamage, Color sourceColor)
 	{
 		Debug.Log("Taking damage: " + baseDamage);
-		Debug.Log("Health remaining: " + this.currentHealth);
+		Debug.Log("Health remaining: " + this._currentHealth);
 		float damage;
-		if (this.color == sourceColor) {
+		if (this.Color == sourceColor) {
 			damage = baseDamage;
-			
-		} else if (this.advantageCircle[sourceColor] == this.color) {
-			
-			damage = baseDamage * this.advantageFactor;
+		} else if (this._advantageCircle[sourceColor] == this.Color) {
+			damage = baseDamage * this.AdvantageFactor;
 			
 		} else {
-			
-			damage = baseDamage / this.advantageFactor;
+			damage = baseDamage / this.AdvantageFactor;
 		}
 
-		this.currentHealth -= damage;
-		if (this.currentHealth <= 0) {
-			Destroy(this.gameObject);
+		this._currentHealth -= damage;
+		if (this._currentHealth <= 0)
+		{
+			this.die();
+		}
+	}
+
+	public void die()
+	{
+		Destroy(this.gameObject);
+		for (int i = 0; i < NumAmmoDrop; i++)
+		{
+			GameObject ammoObj = (GameObject)(Instantiate (Ammo, transform.position, Quaternion.identity));
+			Ammo ammo = (Ammo) ammoObj.GetComponent(typeof(Ammo));
+			ammo.Color = Color;
 		}
 	}
 		

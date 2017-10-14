@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using System.Collections.Generic;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -13,6 +14,8 @@ public class PlayerMovement : MonoBehaviour {
 	private float jumpInterval = 0.2F;
 	private float nextJump = 0.0F;
 	private float distToGround;
+	private IDictionary<Color, int> _ammoRemaining;
+	private Color _selectedColor = Color.Blue;
 
 	public GameObject bullet;
 
@@ -21,6 +24,18 @@ public class PlayerMovement : MonoBehaviour {
 		rigidbody = GetComponent<Rigidbody2D>();
 		Collider2D collider = GetComponent<Collider2D>();
 		distToGround = collider.bounds.extents.y;
+		
+		_ammoRemaining = new Dictionary<Color, int>()
+		{
+			{Color.Red, 10},
+			{Color.Green, 10},
+			{Color.Blue, 10}
+		};
+	}
+
+	public void addAmmo(Color color, int amount)
+	{
+		_ammoRemaining[color] += amount;
 	}
 
 	private bool IsGrounded()

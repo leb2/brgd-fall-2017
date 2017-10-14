@@ -1,6 +1,8 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
+
 
 
 
@@ -18,6 +20,16 @@ public class Enemy : MonoBehaviour
 
 	private float currentHealth;
 
+	public GameObject bullet;
+
+	private Rigidbody2D rigidbody;
+
+	//enemy movement 
+	public Transform player;
+	int MoveSpeed = 4;
+	int MaxDist = 10;
+	int MinDist = 20;
+
 	// Use this for initialization
 	void Start ()
 	{
@@ -29,11 +41,21 @@ public class Enemy : MonoBehaviour
 			{Color.Green, Color.Blue},
 			{Color.Blue, Color.Red}
 		};
+
+		rigidbody = GetComponent<Rigidbody2D>();
 	}
-	
+
 	// Update is called once per frame
 	void Update () {
-		
+//		transform.LookAt(Player);
+//
+//		float distance = Vector3.Distance(transform.position, player.position);
+//
+//		if (distance <= MinDist) {
+//			transform.position += transform.forward * MoveSpeed * Time.deltaTime;
+//			transform.position = Vector3.SmoothDamp(transform.position, player.position, ref smoothVelocity, smoothTime);
+//
+//		}
 	}
 	
 	float damageMultiplier(float baseDamage, Color sourceColor)
@@ -41,11 +63,12 @@ public class Enemy : MonoBehaviour
 		if (this.color == sourceColor) {
 			return baseDamage;
 			
-		} else if (this.advantageCircle[sourceColor] == this.color) {
+		} else if (this.advantageCircle [sourceColor] == this.color) {
 			return baseDamage * this.advantageFactor;
 			
 		} else {
 			return baseDamage / this.advantageFactor;
 		}
 	}
+		
 }

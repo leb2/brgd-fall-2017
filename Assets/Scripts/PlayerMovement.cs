@@ -45,20 +45,16 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 		rigidbody.velocity = new Vector2(moveHorizontal * speed, yVelocity);
-	}
 
-	private void FixedUpdate()
-	{
 		//bullet functionality
 		if (Input.GetKeyDown (KeyCode.Space))
-
 		{
 
-			GameObject b = (GameObject)(Instantiate (bullet, transform.position + transform.up*1.5f, Quaternion.identity));
+			GameObject b = (GameObject)(Instantiate (bullet, transform.position, Quaternion.identity));
 
 			b.GetComponent<Rigidbody2D> ().AddForce (transform.up * 1000);
 			b.GetComponent<Rigidbody2D> ().AddForce (transform.right * 1000);
-
+			Destroy(b, 2);
 		}
 	}
 }

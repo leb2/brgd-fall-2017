@@ -5,22 +5,32 @@ using UnityEngine;
 public class Ammo : MonoBehaviour
 {
 	public Color Color;
+	public GameObject Player;
+
+	public float Acceleration = 0.05F;
+	private float _speed = 0;
+	
 
 	// Use this for initialization
 	void Start () {
 		
 	}
 	
-	// Update is called once per frame
-	void Update () {
+	void Update ()
+	{
+		Rigidbody2D body = this.gameObject.GetComponent<Rigidbody2D>();
+		Vector3 direction = Player.transform.position - transform.position;
 		
+		transform.position = transform.position + direction.normalized * _speed;
+		_speed += Acceleration;
+		
+		Debug.Log(Player.transform.position);
 	}
 	
-	void OnCollisionEnter2D(Collision2D other)
+	void OnTriggerEnter2D(Collider2D other)
 	{
 		if (other.gameObject.CompareTag("Player"))
 		{
-			Debug.Log("Collided with player", other.gameObject);
             PlayerMovement player = (PlayerMovement) other.gameObject.GetComponent(typeof(PlayerMovement));
 			player.addAmmo(Color, 1);
             Destroy(this.gameObject);

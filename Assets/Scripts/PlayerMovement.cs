@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class PlayerMovement : MonoBehaviour {
 	public float jumpSpeed = 10;
 	
 	public LayerMask groundLayers;
+	public Text AmmoText;
 	
 	private Rigidbody2D rigidbody;
 	
@@ -27,9 +29,9 @@ public class PlayerMovement : MonoBehaviour {
 		
 		_ammoRemaining = new Dictionary<Color, int>()
 		{
-			{Color.Red, 10},
-			{Color.Green, 10},
-			{Color.Blue, 10}
+			{Color.Red, 100},
+			{Color.Green, 100},
+			{Color.Blue, 100}
 		};
 	}
 
@@ -61,13 +63,19 @@ public class PlayerMovement : MonoBehaviour {
 		rigidbody.velocity = new Vector2(moveHorizontal * speed, yVelocity);
 
 		//bullet functionality
-		if (Input.GetKeyDown (KeyCode.Space))
-		{
 
+		int currentAmmoRemaining = _ammoRemaining[_selectedColor];
+		
+		if (Input.GetKeyDown (KeyCode.Space) && currentAmmoRemaining > 0)
+		{
+			_ammoRemaining[_selectedColor] -= 1;
 			GameObject b = (GameObject)(Instantiate (bullet, transform.position, Quaternion.identity));
 
 			b.GetComponent<Rigidbody2D> ().AddForce (transform.up * 1000);
 			b.GetComponent<Rigidbody2D> ().AddForce (transform.right * 1000);
+
+			AmmoText.text = "Testing";
+			
 			Destroy(b, 2);
 		}
 	}

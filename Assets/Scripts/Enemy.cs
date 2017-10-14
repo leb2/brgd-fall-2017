@@ -17,6 +17,7 @@ public class Enemy : MonoBehaviour
 	public int NumAmmoDrop = 3;
 
 	public GameObject bullet;
+	public GameObject playerObj;
 
 	private Rigidbody2D rigidbody;
 
@@ -84,6 +85,7 @@ public class Enemy : MonoBehaviour
 		{
 			GameObject ammoObj = (GameObject)(Instantiate (Ammo, transform.position, Quaternion.identity));
 			Ammo ammo = (Ammo) ammoObj.GetComponent(typeof(Ammo));
+			ammo.Player = this.playerObj;
 			ammo.Color = Color;
 		}
 	}

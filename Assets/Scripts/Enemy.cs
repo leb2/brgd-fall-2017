@@ -16,7 +16,6 @@ public class Enemy : MonoBehaviour
 	public float AdvantageFactor = 2F;
 	public int NumAmmoDrop = 3;
 
-<<<<<<< HEAD
 	public GameObject bullet;
 
 	private Rigidbody2D rigidbody;
@@ -27,11 +26,9 @@ public class Enemy : MonoBehaviour
 	int MaxDist = 10;
 	int MinDist = 20;
 
-=======
 	private float _currentHealth;
 	public GameObject Ammo;
 	
->>>>>>> Add ammo drops
 	// Use this for initialization
 	void Start () {
 		this._currentHealth = this.MaxHealth;

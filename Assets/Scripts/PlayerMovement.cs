@@ -26,8 +26,8 @@ public class PlayerMovement : MonoBehaviour {
 
 	private bool IsGrounded()
 	{
-		Vector2 top_left = new Vector2(transform.position.x - 1, transform.position.y + distToGround - 1F);
-		Vector2 bot_right = new Vector2(transform.position.x + 1, transform.position.y + distToGround + 2F);
+		Vector2 top_left = new Vector2(transform.position.x - 0.1F, transform.position.y - distToGround);
+		Vector2 bot_right = new Vector2(transform.position.x + 0.1F, transform.position.y - distToGround - 0.1F);
 		return Physics2D.OverlapArea(top_left, bot_right, groundLayers);    
 	}
 	

@@ -19,7 +19,7 @@ public class Bullet : MonoBehaviour
 		if (other.gameObject.CompareTag("Enemy"))
 		{
             Enemy otherEnemy = (Enemy) other.gameObject.GetComponent(typeof(Enemy));
-            otherEnemy.takeDamage(this.Damage, this.Color);
+            otherEnemy.TakeDamage(this.Damage, this.Color);
 		}
 	}
 }

@@ -39,7 +39,7 @@ public class Ammo : MonoBehaviour
 		if (other.gameObject.CompareTag("Player"))
 		{
             PlayerMovement player = (PlayerMovement) other.gameObject.GetComponent(typeof(PlayerMovement));
-			player.addAmmo(Color, 1);
+			player.AddAmmo(Color, 1);
             Destroy(this.gameObject);
 		}
 	}

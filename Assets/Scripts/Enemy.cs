@@ -9,7 +9,12 @@ public enum Color { Red, Blue, Green };
 public class Enemy : MonoBehaviour
 {
 	// Maps each color the color that it has advantage over
-	private IDictionary<Color, Color> _advantageCircle;
+	public static IDictionary<Color, Color> AdvantageCircle =new Dictionary<Color, Color>()
+	{
+		{Color.Red, Color.Green},
+		{Color.Green, Color.Blue},
+		{Color.Blue, Color.Red}
+	};
 	
 	public Color Color;
 	public float MaxHealth = 50F;
@@ -33,14 +38,6 @@ public class Enemy : MonoBehaviour
 	// Use this for initialization
 	void Start () {
 		this._currentHealth = this.MaxHealth;
-
-		this._advantageCircle = new Dictionary<Color, Color>()
-		{
-			{Color.Red, Color.Green},
-			{Color.Green, Color.Blue},
-			{Color.Blue, Color.Red}
-		};
-
 		rigidbody = GetComponent<Rigidbody2D>();
 	}
 
@@ -57,14 +54,14 @@ public class Enemy : MonoBehaviour
 //		}
 	}
 	
-	public void takeDamage(float baseDamage, Color sourceColor)
+	public void TakeDamage(float baseDamage, Color sourceColor)
 	{
 		Debug.Log("Taking damage: " + baseDamage);
 		Debug.Log("Health remaining: " + this._currentHealth);
 		float damage;
 		if (this.Color == sourceColor) {
 			damage = baseDamage;
-		} else if (this._advantageCircle[sourceColor] == this.Color) {
+		} else if (Enemy.AdvantageCircle[sourceColor] == this.Color) {
 			damage = baseDamage * this.AdvantageFactor;
 			
 		} else {
@@ -74,11 +71,11 @@ public class Enemy : MonoBehaviour
 		this._currentHealth -= damage;
 		if (this._currentHealth <= 0)
 		{
-			this.die();
+			this.Die();
 		}
 	}
 
-	public void die()
+	public void Die()
 	{
 		Destroy(this.gameObject);
 		for (int i = 0; i < NumAmmoDrop; i++)

@@ -28,6 +28,8 @@ public class Enemy : MonoBehaviour
 	public float chaseRange;
 	public float speed;
 
+	public PlayerMovement playerScipt;
+
 	//enemy movement 
 
 	private float _currentHealth;
@@ -37,15 +39,14 @@ public class Enemy : MonoBehaviour
 	void Start () {
 		this._currentHealth = this.MaxHealth;
 		//rigidbody = GetComponent<Rigidbody2D>();
+
 	}
 
 	// Update is called once per frame
 	void Update () {
 		//Get the distance to the target & check if its close enough to chase
 		float distToTarget = Vector3.Distance (transform.position, target.position);
-
-		Debug.Log("Enemy movement");
-
+	
 		if ((distToTarget < chaseRange) & (distToTarget > 0.7f)) { 
 			//turn towards target and chase it
 			Vector3 targetDirection = target.position - transform.position;
@@ -98,7 +99,7 @@ public class Enemy : MonoBehaviour
 	void OnCollisionEnter2D(Collision2D other)
 	{
 		if (other.gameObject.CompareTag ("Player")) {
-			Debug.Log("Player detected");
+			playerScipt.takeDamage ();
 		}
 	}
 		

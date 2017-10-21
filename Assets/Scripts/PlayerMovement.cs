@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using System;using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
@@ -28,6 +27,7 @@ public class PlayerMovement : MonoBehaviour {
 	public float MaxHealth = 100f;
 	public float currentHealth; 
 	public float healthDamage = 20f;
+	
 	public RectTransform healthBar;
 
 	private void Start()

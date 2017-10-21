@@ -13,7 +13,8 @@ public class PlayerMovement : MonoBehaviour {
 	public Text AmmoText;
 	public Text CurrentAmmoText;
 	
-	private Rigidbody2D rigidbody;
+	public Rigidbody2D rigidbody;
+	public CompositeCollider2D collider;
 	
 	private float jumpInterval = 0.2F;
 	private float nextJump = 0.0F;
@@ -21,7 +22,11 @@ public class PlayerMovement : MonoBehaviour {
 	private IDictionary<Color, int> _ammoRemaining;
 	private Color _selectedColor = Color.Blue;
 
+	//player health
 	public GameObject bullet;
+	public float MaxHealth = 100f;
+	public float currentHealth; 
+	public float healthDamage = 20f;
 
 	private void Start()
 	{
@@ -36,6 +41,8 @@ public class PlayerMovement : MonoBehaviour {
 			{Color.Blue, 100}
 		};
 		UpdateAmmoText();
+
+		this.currentHealth = this.MaxHealth;
 	}
 
 	public void AddAmmo(Color color, int amount)
@@ -106,5 +113,19 @@ public class PlayerMovement : MonoBehaviour {
 			AmmoText.text = "Blues: " + _ammoRemaining[Color.Blue].ToString() + "\n" +
 							"Red: " + _ammoRemaining[Color.Red].ToString() + "\n" +
 							"Green: " + _ammoRemaining[Color.Green].ToString();
+	}
+
+
+	public void takeDamage()
+	{
+		currentHealth -= healthDamage;
+		if (currentHealth < 0.0) {
+			this.dies ();
+		}
+	}
+
+	public void dies()
+	{
+		Destroy (this.gameObject);
 	}
 }

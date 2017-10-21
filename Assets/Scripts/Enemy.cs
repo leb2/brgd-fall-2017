@@ -44,6 +44,8 @@ public class Enemy : MonoBehaviour
 		//Get the distance to the target & check if its close enough to chase
 		float distToTarget = Vector3.Distance (transform.position, target.position);
 
+		Debug.Log("Enemy movement");
+
 		if ((distToTarget < chaseRange) & (distToTarget > 0.7f)) { 
 			//turn towards target and chase it
 			Vector3 targetDirection = target.position - transform.position;
@@ -90,6 +92,13 @@ public class Enemy : MonoBehaviour
 			Ammo ammo = (Ammo) ammoObj.GetComponent(typeof(Ammo));
 			ammo.Player = this.playerObj;
 			ammo.Color = Color;
+		}
+	}
+
+	void OnCollisionEnter2D(Collision2D other)
+	{
+		if (other.gameObject.CompareTag ("Player")) {
+			Debug.Log("Player detected");
 		}
 	}
 		

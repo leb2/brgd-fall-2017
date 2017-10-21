@@ -45,6 +45,7 @@ public class PlayerMovement : MonoBehaviour {
 		UpdateAmmoText();
 
 		this.currentHealth = this.MaxHealth;
+		GameManager.Instance.IsDead = false;
 	}
 
 	public void AddAmmo(Color color, int amount)
@@ -132,5 +133,6 @@ public class PlayerMovement : MonoBehaviour {
 	public void dies()
 	{
 		Destroy (this.gameObject);
+		GameManager.Instance.IsDead = true;
 	}
 }

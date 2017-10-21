@@ -118,7 +118,6 @@ public class PlayerMovement : MonoBehaviour {
 
 	public void takeDamage()
 	{
-		Debug.Log("taking damage");
 		currentHealth -= healthDamage;
 		if (currentHealth < 0.0) {
 			this.dies ();

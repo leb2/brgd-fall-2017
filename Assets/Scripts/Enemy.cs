@@ -41,8 +41,6 @@ public class Enemy : MonoBehaviour
 		_currentHealth = this.MaxHealth;
 		_playerObj = GameObject.FindGameObjectWithTag("Player");
 		_target = _playerObj.transform;
-
-		//rigidbody = GetComponent<Rigidbody2D>();
 	}
 
 	// Update is called once per frame

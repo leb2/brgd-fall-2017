@@ -85,10 +85,13 @@ public class Enemy : MonoBehaviour
 			}
 			else
 			{
-				if (IsGrounded())
+				if (Mathf.Abs(transform.position.y - _target.position.y) < 1.5F)
 				{
-                    float direction = Mathf.Sign(targetDirection.x);
-                    _body.velocity = Vector2.right * speed * direction;
+                    if (IsGrounded())
+                    {
+                        float direction = Mathf.Sign(targetDirection.x);
+                        _body.velocity = Vector2.right * speed * direction;
+                    }
 				}
 			}
 		}

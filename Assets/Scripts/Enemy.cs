@@ -22,9 +22,10 @@ public class Enemy : MonoBehaviour
 	public int NumAmmoDrop = 3;
 
 	public GameObject bullet;
-	public GameObject playerObj;
-
-	public Transform target;
+	
+	private GameObject _playerObj;
+	private Transform _target;
+	
 	public float chaseRange;
 	public float speed;
 
@@ -37,19 +38,21 @@ public class Enemy : MonoBehaviour
 	
 	// Use this for initialization
 	void Start () {
-		this._currentHealth = this.MaxHealth;
-		//rigidbody = GetComponent<Rigidbody2D>();
+		_currentHealth = this.MaxHealth;
+		_playerObj = GameObject.FindGameObjectWithTag("Player");
+		_target = _playerObj.transform;
 
+		//rigidbody = GetComponent<Rigidbody2D>();
 	}
 
 	// Update is called once per frame
 	void Update () {
 		//Get the distance to the target & check if its close enough to chase
-		float distToTarget = Vector3.Distance (transform.position, target.position);
-	
+		float distToTarget = Vector3.Distance (transform.position, _target.position);
+
 		if ((distToTarget < chaseRange) & (distToTarget > 0.7f)) { 
 			//turn towards target and chase it
-			Vector3 targetDirection = target.position - transform.position;
+			Vector3 targetDirection = _target.position - transform.position;
 			float angle = Mathf.Atan2 (targetDirection.y, targetDirection.x) * Mathf.Rad2Deg - 90f;
 			//quaternion to find desired rotation
 			Quaternion q = Quaternion.AngleAxis (angle, Vector3.forward);
@@ -91,7 +94,7 @@ public class Enemy : MonoBehaviour
 		{
 			GameObject ammoObj = (GameObject)(Instantiate (Ammo, transform.position, Quaternion.identity));
 			Ammo ammo = (Ammo) ammoObj.GetComponent(typeof(Ammo));
-			ammo.Player = this.playerObj;
+			ammo.Player = _playerObj;
 			ammo.Color = Color;
 		}
 	}

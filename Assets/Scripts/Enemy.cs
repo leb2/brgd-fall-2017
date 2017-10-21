@@ -30,10 +30,12 @@ public class Enemy : MonoBehaviour
 	public float speed;
 
 	public PlayerMovement playerScipt;
+	public bool isFlyingEnemy;
 
 	//enemy movement 
 
 	private float _currentHealth;
+	private Rigidbody2D _body;
 	public GameObject Ammo;
 	
 	// Use this for initialization
@@ -41,22 +43,35 @@ public class Enemy : MonoBehaviour
 		_currentHealth = this.MaxHealth;
 		_playerObj = GameObject.FindGameObjectWithTag("Player");
 		_target = _playerObj.transform;
+		_body = GetComponent<Rigidbody2D>();
 	}
 
 	// Update is called once per frame
-	void Update () {
-		//Get the distance to the target & check if its close enough to chase
-		float distToTarget = Vector3.Distance (transform.position, _target.position);
+	void Update()
+	{
 
-		if ((distToTarget < chaseRange) & (distToTarget > 0.7f)) { 
-			//turn towards target and chase it
-			Vector3 targetDirection = _target.position - transform.position;
-			float angle = Mathf.Atan2 (targetDirection.y, targetDirection.x) * Mathf.Rad2Deg - 90f;
-			//quaternion to find desired rotation
-			Quaternion q = Quaternion.AngleAxis (angle, Vector3.forward);
-			transform.rotation = Quaternion.RotateTowards (transform.rotation, q, 180);
-			//move enemy
-			transform.Translate( Vector3.up * Time.deltaTime * speed);
+		//Get the distance to the target & check if its close enough to chase
+		float distToTarget = Vector3.Distance(transform.position, _target.position);
+        Vector3 targetDirection = _target.position - transform.position;
+
+		if ((distToTarget < chaseRange) & (distToTarget > 0.7f))
+		{
+
+			if (isFlyingEnemy)
+			{
+				//turn towards target and chase it
+				float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg - 90f;
+				//quaternion to find desired rotation
+				Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
+				transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 180);
+				//move enemy
+				transform.Translate(Vector3.up * Time.deltaTime * speed);
+			}
+			else
+			{
+				float direction = Mathf.Sign(targetDirection.x);
+				_body.velocity = Vector2.right * speed * direction;
+			}
 		}
 	}
 

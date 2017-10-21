@@ -102,6 +102,8 @@ public class PlayerMovement : MonoBehaviour {
 			Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
 			
 			GameObject b = (GameObject)(Instantiate (bullet, transform.position + direction * 1.2F, Quaternion.identity));
+			Bullet bulletScript = b.GetComponent(typeof(Bullet)) as Bullet;
+			bulletScript.Color = _selectedColor;
 			Rigidbody2D bulletBody = b.GetComponent<Rigidbody2D>();
 			bulletBody.velocity = direction * bulletSpeed;
 

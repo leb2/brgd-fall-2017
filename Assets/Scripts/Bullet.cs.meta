@@ -1,11 +1,14 @@
 fileFormatVersion: 2
 guid: 2fdd223f8b826465ea7779f6112ca44a
-timeCreated: 1508003373
+timeCreated: 1508615823
 licenseType: Free
 MonoImporter:
   externalObjects: {}
   serializedVersion: 2
-  defaultReferences: []
+  defaultReferences:
+  - blueSprite: {fileID: 21300000, guid: 67118800d13a047c3a5a27832c87d0c8, type: 3}
+  - redSprite: {fileID: 21300000, guid: fdb2c2d72baf34719a0e86cea9bc343a, type: 3}
+  - greenSprite: {fileID: 21300000, guid: 0ac6fe3faf1624825a0a9a35849ed583, type: 3}
   executionOrder: 0
   icon: {instanceID: 0}
   userData: 

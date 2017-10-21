@@ -15,6 +15,10 @@ public class Ammo : MonoBehaviour
 	private Vector3 _velocity;
 
 	private Rigidbody2D _rigidbody;
+
+	public Sprite blueSprite;
+	public Sprite redSprite;
+	public Sprite greenSprite;
 	
 
 	// Use this for initialization

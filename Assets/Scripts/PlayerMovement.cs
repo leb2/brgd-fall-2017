@@ -6,8 +6,9 @@ using UnityEngine.UI;
 
 public class PlayerMovement : MonoBehaviour {
 
-	public float speed = 10;
-	public float jumpSpeed = 10;
+	public float speed = 10F;
+	public float jumpSpeed = 10F;
+	public float bulletSpeed = 1F;
 	
 	public LayerMask groundLayers;
 	public Text AmmoText;
@@ -97,10 +98,11 @@ public class PlayerMovement : MonoBehaviour {
 		if (Input.GetKeyDown (KeyCode.Space) && currentAmmoRemaining > 0)
 		{
 			_ammoRemaining[_selectedColor] -= 1;
-			GameObject b = (GameObject)(Instantiate (bullet, transform.position, Quaternion.identity));
-
-			b.GetComponent<Rigidbody2D> ().AddForce (transform.up * 1000);
-			b.GetComponent<Rigidbody2D> ().AddForce (transform.right * 1000);
+			Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+			
+			GameObject b = (GameObject)(Instantiate (bullet, transform.position + direction * 1.2F, Quaternion.identity));
+			Rigidbody2D bulletBody = b.GetComponent<Rigidbody2D>();
+			bulletBody.velocity = direction * bulletSpeed;
 
 			UpdateAmmoText();
 

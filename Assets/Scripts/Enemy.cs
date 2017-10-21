@@ -139,5 +139,4 @@ public class Enemy : MonoBehaviour
 			_playerScript.takeDamage();
 		}
 	}
-		
 }

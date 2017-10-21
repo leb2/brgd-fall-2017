@@ -5,7 +5,6 @@ using UnityEngine;
 public class Ammo : MonoBehaviour
 {
 	public Color Color;
-	public GameObject Player;
 
 	public float InitialDisperseSpeed = 1F;
 	public float Acceleration = 0.01F;
@@ -19,6 +18,8 @@ public class Ammo : MonoBehaviour
 	public Sprite blueSprite;
 	public Sprite redSprite;
 	public Sprite greenSprite;
+
+	GameObject Player;
 	
 
 	// Use this for initialization
@@ -26,6 +27,8 @@ public class Ammo : MonoBehaviour
 		Vector2 dir = Random.insideUnitCircle.normalized;
 		Vector3 initialDirection = new Vector3(dir.x, dir.y, 0);
 		_velocity = initialDirection * InitialDisperseSpeed;
+		
+		Player = GameObject.FindGameObjectWithTag("Player");
 		
 		_rigidbody = GetComponent<Rigidbody2D>();
 		_rigidbody.angularVelocity = 5F;

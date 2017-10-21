@@ -126,7 +126,6 @@ public class Enemy : MonoBehaviour
 		{
 			GameObject ammoObj = (GameObject)(Instantiate (Ammo, transform.position, Quaternion.identity));
 			Ammo ammo = (Ammo) ammoObj.GetComponent(typeof(Ammo));
-			ammo.Player = _playerObj;
 			ammo.Color = Color;
 		}
 	}

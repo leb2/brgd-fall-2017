@@ -134,7 +134,6 @@ public class Enemy : MonoBehaviour
 	{
 		if (other.gameObject.CompareTag ("Player")) {
 			_playerScript.takeDamage();
-			Die();
 		}
 	}
 		

@@ -19,13 +19,11 @@ public class Enemy : MonoBehaviour
 
 	public GameObject bullet;
 
-	private Rigidbody2D rigidbody;
+	public Transform target;
+	public float chaseRange;
+	public float speed;
 
 	//enemy movement 
-	public Transform player;
-	int MoveSpeed = 4;
-	int MaxDist = 10;
-	int MinDist = 20;
 
 	// Use this for initialization
 	void Start () {
@@ -38,20 +36,27 @@ public class Enemy : MonoBehaviour
 			{Color.Blue, Color.Red}
 		};
 
-		rigidbody = GetComponent<Rigidbody2D>();
-	}
+	} 
 
 	// Update is called once per frame
 	void Update () {
-//		transform.LookAt(Player);
-//
-//		float distance = Vector3.Distance(transform.position, player.position);
-//
-//		if (distance <= MinDist) {
-//			transform.position += transform.forward * MoveSpeed * Time.deltaTime;
-//			transform.position = Vector3.SmoothDamp(transform.position, player.position, ref smoothVelocity, smoothTime);
-//
-//		}
+		//Get the distance to the target & check if its close enough to chase
+		float distToTarget = Vector3.Distance (transform.position, target.position);
+
+		if ((distToTarget < chaseRange) & (distToTarget > 0.7f)) { 
+			//turn towards target and chase it
+			Vector3 targetDirection = target.position - transform.position;
+			float angle = Mathf.Atan2 (targetDirection.y, targetDirection.x) * Mathf.Rad2Deg - 90f;
+			//quaternion to find desired rotation
+			Quaternion q = Quaternion.AngleAxis (angle, Vector3.forward);
+			transform.rotation = Quaternion.RotateTowards (transform.rotation, q, 180);
+			//move enemy
+			transform.Translate( Vector3.up * Time.deltaTime * speed);
+		}
+	}
+
+	void FixedUpdate() {
+
 	}
 	
 	public void takeDamage(float baseDamage, Color sourceColor)

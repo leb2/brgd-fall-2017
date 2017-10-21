@@ -127,7 +127,7 @@ public class PlayerMovement : MonoBehaviour {
 	{
 		Debug.Log ("taking damage");
 		currentHealth -= healthDamage;
-		if (currentHealth < 0.0) {
+		if (currentHealth <= 0.0) {
 			this.dies ();
 		}
 		healthBar.sizeDelta = new Vector2(currentHealth/100f, healthBar.sizeDelta.y);

@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
 	// Use this for initialization
 	void Start () {
 		this._currentHealth = this.MaxHealth;
-		rigidbody = GetComponent<Rigidbody2D>();
+		//rigidbody = GetComponent<Rigidbody2D>();
 	}
 
 	// Update is called once per frame

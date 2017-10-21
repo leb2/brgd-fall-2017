@@ -85,26 +85,18 @@ public class PlayerMovement : MonoBehaviour {
 		rigidbody.velocity = new Vector2(moveHorizontal * speed, yVelocity);
 
 		//bullet functionality
-<<<<<<< HEAD
-		if (Input.GetKeyDown (KeyCode.Space))
-		{
-=======
-
 		int currentAmmoRemaining = _ammoRemaining[_selectedColor];
 		
 		if (Input.GetKeyDown (KeyCode.Space) && currentAmmoRemaining > 0)
 		{
 			_ammoRemaining[_selectedColor] -= 1;
->>>>>>> 9133e1f671ed0cacce03fc9712f5e23579762c2a
 			GameObject b = (GameObject)(Instantiate (bullet, transform.position, Quaternion.identity));
 
 			b.GetComponent<Rigidbody2D> ().AddForce (transform.up * 1000);
 			b.GetComponent<Rigidbody2D> ().AddForce (transform.right * 1000);
 
-<<<<<<< HEAD
-=======
 			UpdateAmmoText();
->>>>>>> 9133e1f671ed0cacce03fc9712f5e23579762c2a
+
 			Destroy(b, 2);
 		}
 	}

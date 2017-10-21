@@ -38,12 +38,11 @@ public class PlayerMovement : MonoBehaviour {
 		
 		_ammoRemaining = new Dictionary<Color, int>()
 		{
-			{Color.Red, 6},
-			{Color.Green, 6},
-			{Color.Blue, 6}
+			{Color.Red, 2},
+			{Color.Green, 2},
+			{Color.Blue, 2}
 		};
 		UpdateAmmoText();
-
 		this.currentHealth = this.MaxHealth;
 	}
 

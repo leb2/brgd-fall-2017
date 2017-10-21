@@ -29,7 +29,7 @@ public class Enemy : MonoBehaviour
 	public float chaseRange;
 	public float speed;
 
-	public PlayerMovement playerScipt;
+	private PlayerMovement _playerScript;
 	public bool isFlyingEnemy;
 
 	//enemy movement 
@@ -49,6 +49,8 @@ public class Enemy : MonoBehaviour
 		_body = GetComponent<Rigidbody2D>();
 		_collider = GetComponent<Collider2D>();
 		_distToGround = _collider.bounds.extents.y;
+		
+		_playerScript = _playerObj.GetComponent(typeof(PlayerMovement)) as PlayerMovement;
 	}
 	
 	private bool IsGrounded()
@@ -132,7 +134,8 @@ public class Enemy : MonoBehaviour
 	void OnCollisionEnter2D(Collision2D other)
 	{
 		if (other.gameObject.CompareTag ("Player")) {
-			playerScipt.takeDamage ();
+			_playerScript.takeDamage();
+			Die();
 		}
 	}
 		

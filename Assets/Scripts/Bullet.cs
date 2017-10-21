@@ -15,7 +15,6 @@ public class Bullet : MonoBehaviour
 
 	// Use this for initialization
 	void Start () {
-		Debug.Log("Starting up");
 		SpriteRenderer sr = GetComponent<SpriteRenderer>();
 		if (Color == Color.Blue)
 		{

@@ -38,9 +38,9 @@ public class PlayerMovement : MonoBehaviour {
 		
 		_ammoRemaining = new Dictionary<Color, int>()
 		{
-			{Color.Red, 100},
-			{Color.Green, 100},
-			{Color.Blue, 100}
+			{Color.Red, 6},
+			{Color.Green, 6},
+			{Color.Blue, 6}
 		};
 		UpdateAmmoText();
 
@@ -50,6 +50,8 @@ public class PlayerMovement : MonoBehaviour {
 	public void AddAmmo(Color color, int amount)
 	{
 		_ammoRemaining[color] += amount;
+		_ammoRemaining[color] = Math.Min(_ammoRemaining[color], 10);
+		UpdateAmmoText();
 	}
 
 	private bool IsGrounded()

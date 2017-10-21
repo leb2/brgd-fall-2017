@@ -29,6 +29,20 @@ public class Ammo : MonoBehaviour
 		
 		_rigidbody = GetComponent<Rigidbody2D>();
 		_rigidbody.angularVelocity = 5F;
+		
+		SpriteRenderer sr = GetComponent<SpriteRenderer>();
+		if (Color == Color.Blue)
+		{
+			sr.sprite = blueSprite;
+		}
+		else if (Color == Color.Red)
+		{
+			sr.sprite = redSprite;
+		}
+		else if (Color == Color.Green)
+		{
+			sr.sprite = greenSprite;
+		}
 	}
 	
 	void Update ()

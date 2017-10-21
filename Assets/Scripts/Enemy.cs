@@ -9,15 +9,20 @@ public enum Color { Red, Blue, Green };
 public class Enemy : MonoBehaviour
 {
 	// Maps each color the color that it has advantage over
-	private IDictionary<Color, Color> advantageCircle;
+	public static IDictionary<Color, Color> AdvantageCircle =new Dictionary<Color, Color>()
+	{
+		{Color.Red, Color.Green},
+		{Color.Green, Color.Blue},
+		{Color.Blue, Color.Red}
+	};
 	
-	public Color color;
-	public float maxHealth = 50F;
-	public float advantageFactor = 2F;
-
-	private float currentHealth;
+	public Color Color;
+	public float MaxHealth = 50F;
+	public float AdvantageFactor = 2F;
+	public int NumAmmoDrop = 3;
 
 	public GameObject bullet;
+	public GameObject playerObj;
 
 	public Transform target;
 	public float chaseRange;
@@ -25,18 +30,14 @@ public class Enemy : MonoBehaviour
 
 	//enemy movement 
 
+	private float _currentHealth;
+	public GameObject Ammo;
+	
 	// Use this for initialization
 	void Start () {
-		this.currentHealth = this.maxHealth;
-
-		this.advantageCircle = new Dictionary<Color, Color>()
-		{
-			{Color.Red, Color.Green},
-			{Color.Green, Color.Blue},
-			{Color.Blue, Color.Red}
-		};
-
-	} 
+		this._currentHealth = this.MaxHealth;
+		rigidbody = GetComponent<Rigidbody2D>();
+	}
 
 	// Update is called once per frame
 	void Update () {
@@ -59,26 +60,36 @@ public class Enemy : MonoBehaviour
 
 	}
 	
-	public void takeDamage(float baseDamage, Color sourceColor)
+	public void TakeDamage(float baseDamage, Color sourceColor)
 	{
 		Debug.Log("Taking damage: " + baseDamage);
-		Debug.Log("Health remaining: " + this.currentHealth);
+		Debug.Log("Health remaining: " + this._currentHealth);
 		float damage;
-		if (this.color == sourceColor) {
+		if (this.Color == sourceColor) {
 			damage = baseDamage;
-			
-		} else if (this.advantageCircle[sourceColor] == this.color) {
-			
-			damage = baseDamage * this.advantageFactor;
+		} else if (Enemy.AdvantageCircle[sourceColor] == this.Color) {
+			damage = baseDamage * this.AdvantageFactor;
 			
 		} else {
-			
-			damage = baseDamage / this.advantageFactor;
+			damage = baseDamage / this.AdvantageFactor;
 		}
 
-		this.currentHealth -= damage;
-		if (this.currentHealth <= 0) {
-			Destroy(this.gameObject);
+		this._currentHealth -= damage;
+		if (this._currentHealth <= 0)
+		{
+			this.Die();
+		}
+	}
+
+	public void Die()
+	{
+		Destroy(this.gameObject);
+		for (int i = 0; i < NumAmmoDrop; i++)
+		{
+			GameObject ammoObj = (GameObject)(Instantiate (Ammo, transform.position, Quaternion.identity));
+			Ammo ammo = (Ammo) ammoObj.GetComponent(typeof(Ammo));
+			ammo.Player = this.playerObj;
+			ammo.Color = Color;
 		}
 	}
 		

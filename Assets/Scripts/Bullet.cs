@@ -6,26 +6,20 @@ using UnityEngine;
 public class Bullet : MonoBehaviour
 {
 
-	public float damage = 30F;
-	private Color color = Color.Blue;
+	public float Damage = 30F;
+	private Color Color = Color.Blue;
 
 	// Use this for initialization
 	void Start () {
 		Debug.Log("Starting up");
 	}
 	
-	// Update is called once per frame
-	void Update () {
-		
-	}
-	
 	void OnCollisionEnter2D(Collision2D other)
 	{
-		Debug.Log("Colliding with something");
 		if (other.gameObject.CompareTag("Enemy"))
 		{
             Enemy otherEnemy = (Enemy) other.gameObject.GetComponent(typeof(Enemy));
-            otherEnemy.takeDamage(this.damage, this.color);
+            otherEnemy.TakeDamage(this.Damage, this.Color);
 		}
 	}
 }

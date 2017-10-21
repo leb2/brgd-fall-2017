@@ -37,6 +37,9 @@ public class Enemy : MonoBehaviour
 	private float _currentHealth;
 	private Rigidbody2D _body;
 	public GameObject Ammo;
+	private float _distToGround;
+	public LayerMask groundLayers;
+	private Collider2D _collider;
 	
 	// Use this for initialization
 	void Start () {
@@ -44,6 +47,17 @@ public class Enemy : MonoBehaviour
 		_playerObj = GameObject.FindGameObjectWithTag("Player");
 		_target = _playerObj.transform;
 		_body = GetComponent<Rigidbody2D>();
+		_collider = GetComponent<Collider2D>();
+		_distToGround = _collider.bounds.extents.y;
+	}
+	
+	private bool IsGrounded()
+	{
+		float xRange = _collider.bounds.extents.x;
+		Debug.Log(xRange);
+		Vector2 top_left = new Vector2(transform.position.x - xRange, transform.position.y - _distToGround);
+		Vector2 bot_right = new Vector2(transform.position.x + xRange, transform.position.y - _distToGround - 0.1F);
+		return Physics2D.OverlapArea(top_left, bot_right, groundLayers);    
 	}
 
 	// Update is called once per frame
@@ -69,8 +83,11 @@ public class Enemy : MonoBehaviour
 			}
 			else
 			{
-				float direction = Mathf.Sign(targetDirection.x);
-				_body.velocity = Vector2.right * speed * direction;
+				if (IsGrounded())
+				{
+                    float direction = Mathf.Sign(targetDirection.x);
+                    _body.velocity = Vector2.right * speed * direction;
+				}
 			}
 		}
 	}

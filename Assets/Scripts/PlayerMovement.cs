@@ -27,6 +27,7 @@ public class PlayerMovement : MonoBehaviour {
 	public float MaxHealth = 100f;
 	public float currentHealth; 
 	public float healthDamage = 20f;
+	public RectTransform healthBar;
 
 	private void Start()
 	{
@@ -118,10 +119,12 @@ public class PlayerMovement : MonoBehaviour {
 
 	public void takeDamage()
 	{
+		Debug.Log ("taking damage");
 		currentHealth -= healthDamage;
 		if (currentHealth < 0.0) {
 			this.dies ();
 		}
+		healthBar.sizeDelta = new Vector2(currentHealth/100f, healthBar.sizeDelta.y);
 	}
 
 	public void dies()

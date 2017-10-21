@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using System;using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine.UI;
@@ -28,6 +27,7 @@ public class PlayerMovement : MonoBehaviour {
 	public float MaxHealth = 100f;
 	public float currentHealth; 
 	public float healthDamage = 20f;
+	
 	public RectTransform healthBar;
 
 	private void Start()
@@ -38,12 +38,11 @@ public class PlayerMovement : MonoBehaviour {
 		
 		_ammoRemaining = new Dictionary<Color, int>()
 		{
-			{Color.Red, 100},
-			{Color.Green, 100},
-			{Color.Blue, 100}
+			{Color.Red, 2},
+			{Color.Green, 2},
+			{Color.Blue, 2}
 		};
 		UpdateAmmoText();
-
 		this.currentHealth = this.MaxHealth;
 		GameManager.Instance.IsDead = false;
 	}
@@ -51,6 +50,8 @@ public class PlayerMovement : MonoBehaviour {
 	public void AddAmmo(Color color, int amount)
 	{
 		_ammoRemaining[color] += amount;
+		_ammoRemaining[color] = Math.Min(_ammoRemaining[color], 10);
+		UpdateAmmoText();
 	}
 
 	private bool IsGrounded()
@@ -103,6 +104,8 @@ public class PlayerMovement : MonoBehaviour {
 			Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
 			
 			GameObject b = (GameObject)(Instantiate (bullet, transform.position + direction * 1.2F, Quaternion.identity));
+			Bullet bulletScript = b.GetComponent(typeof(Bullet)) as Bullet;
+			bulletScript.Color = _selectedColor;
 			Rigidbody2D bulletBody = b.GetComponent<Rigidbody2D>();
 			bulletBody.velocity = direction * bulletSpeed;
 

@@ -13,6 +13,12 @@ public class Ammo : MonoBehaviour
 	
 	private float _speed = 0.0F;
 	private Vector3 _velocity;
+
+	private Rigidbody2D _rigidbody;
+
+	public Sprite blueSprite;
+	public Sprite redSprite;
+	public Sprite greenSprite;
 	
 
 	// Use this for initialization
@@ -20,6 +26,23 @@ public class Ammo : MonoBehaviour
 		Vector2 dir = Random.insideUnitCircle.normalized;
 		Vector3 initialDirection = new Vector3(dir.x, dir.y, 0);
 		_velocity = initialDirection * InitialDisperseSpeed;
+		
+		_rigidbody = GetComponent<Rigidbody2D>();
+		_rigidbody.angularVelocity = 5F;
+		
+		SpriteRenderer sr = GetComponent<SpriteRenderer>();
+		if (Color == Color.Blue)
+		{
+			sr.sprite = blueSprite;
+		}
+		else if (Color == Color.Red)
+		{
+			sr.sprite = redSprite;
+		}
+		else if (Color == Color.Green)
+		{
+			sr.sprite = greenSprite;
+		}
 	}
 	
 	void Update ()

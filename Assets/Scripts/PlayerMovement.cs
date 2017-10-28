@@ -74,6 +74,17 @@ public class PlayerMovement : MonoBehaviour {
 			yVelocity = jumpSpeed;
 		}
 
+		rigidbody.velocity = new Vector2(moveHorizontal * speed, yVelocity);
+		if (moveHorizontal < 0)
+		{
+			transform.localRotation = Quaternion.Euler(0, 180, 0);
+		}
+		else if (moveHorizontal > 0)
+		{
+			transform.localRotation = Quaternion.Euler(0, 0, 0);
+		}
+		
+
 		if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
 		{
 			_selectedColor = Enemy.AdvantageCircle[_selectedColor];
@@ -92,8 +103,6 @@ public class PlayerMovement : MonoBehaviour {
 					throw new ArgumentOutOfRangeException();
 			}
 		}
-
-		rigidbody.velocity = new Vector2(moveHorizontal * speed, yVelocity);
 
 		//bullet functionality
 		int currentAmmoRemaining = _ammoRemaining[_selectedColor];

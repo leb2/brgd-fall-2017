@@ -28,29 +28,30 @@ public class GameManager : MonoBehaviour {
 	void Awake()
 	{
 		_instance = this;
-		//pauseScreen = GameObject.GetComponent<GameManager>;
 	}
 
 	void Start()
 	{
 		Score = 10;
 		Time.timeScale = 1;
-
 		pauseScreen.gameObject.SetActive(false);
 	}
 
 	void Update()
 	{
 		if (IsDead) {
-			Debug.Log ("Dead!");
 			this.TogglePauseMenu ();
 		}
 	}
 
 	public void TogglePauseMenu()
 	{
-		Time.timeScale = 0;
 		pauseScreen.gameObject.SetActive(true);
-		Debug.Log ("Pause!");
+		Invoke("loadMainMenu", 1.5f);
+	}
+
+	public void loadMainMenu()
+	{
+		Application.LoadLevel ("MainMenu");
 	}
 }

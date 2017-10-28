@@ -69,36 +69,33 @@ public class Enemy : MonoBehaviour
 	// Update is called once per frame
 	void Update()
 	{
+		//only move enemy if time is not 0, i.e. if game is not paused
+		if (!GameManager.Instance.IsDead) {
+			_canMoveTimer -= Time.deltaTime;
+			if (_canMoveTimer > 0)
+				return;
+				
+			//Get the distance to the target & check if its close enough to chase
+			float distToTarget = Vector3.Distance (transform.position, _target.position);
+			Vector3 targetDirection = _target.position - transform.position;
 
-		_canMoveTimer -= Time.deltaTime;
-		if (_canMoveTimer > 0) return;
-			
-		//Get the distance to the target & check if its close enough to chase
-		float distToTarget = Vector3.Distance(transform.position, _target.position);
-        Vector3 targetDirection = _target.position - transform.position;
+			if ((distToTarget < chaseRange) & (distToTarget > 0.7f)) {
 
-		if ((distToTarget < chaseRange) & (distToTarget > 0.7f))
-		{
-
-			if (isFlyingEnemy)
-			{
-				//turn towards target and chase it
-				float angle = Mathf.Atan2(targetDirection.y, targetDirection.x) * Mathf.Rad2Deg - 90f;
-				//quaternion to find desired rotation
-				Quaternion q = Quaternion.AngleAxis(angle, Vector3.forward);
-				transform.rotation = Quaternion.RotateTowards(transform.rotation, q, 180);
-				//move enemy
-				transform.Translate(Vector3.up * Time.deltaTime * speed);
-			}
-			else
-			{
-				if (Mathf.Abs(transform.position.y - _target.position.y) < 1.5F)
-				{
-                    if (IsGrounded())
-                    {
-                        float direction = Mathf.Sign(targetDirection.x);
-                        rigidbody.velocity = Vector2.right * speed * direction;
-                    }
+				if (isFlyingEnemy) {
+					//turn towards target and chase it
+					float angle = Mathf.Atan2 (targetDirection.y, targetDirection.x) * Mathf.Rad2Deg - 90f;
+					//quaternion to find desired rotation
+					Quaternion q = Quaternion.AngleAxis (angle, Vector3.forward);
+					transform.rotation = Quaternion.RotateTowards (transform.rotation, q, 180);
+					//move enemy
+					transform.Translate (Vector3.up * Time.deltaTime * speed);
+				} else {
+					if (Mathf.Abs (transform.position.y - _target.position.y) < 1.5F) {
+						if (IsGrounded ()) {
+							float direction = Mathf.Sign (targetDirection.x);
+							rigidbody.velocity = Vector2.right * speed * direction;
+						}
+					}
 				}
 			}
 		}

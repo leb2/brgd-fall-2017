@@ -6,6 +6,7 @@ public class CameraControl : MonoBehaviour {
 
 	public GameObject player;
 
+
 	private Vector3 offset;
 
 	// Use this for initialization
@@ -18,8 +19,8 @@ public class CameraControl : MonoBehaviour {
 	
 	// Update is called once per frame
 	void LateUpdate () {
-
-		transform.position = new Vector3(player.transform.position.x + offset.x, transform.position.y, transform.position.z);
-
+		if (!GameManager.Instance.IsDead) {
+			transform.position = new Vector3 (player.transform.position.x + offset.x, transform.position.y, transform.position.z);
+		}
 	}
 }

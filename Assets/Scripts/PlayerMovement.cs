@@ -98,7 +98,7 @@ public class PlayerMovement : MonoBehaviour {
 		//bullet functionality
 		int currentAmmoRemaining = _ammoRemaining[_selectedColor];
 		
-		if (Input.GetKeyDown (KeyCode.Space) && currentAmmoRemaining > 0)
+		if (Input.GetKeyDown (KeyCode.Mouse0) && currentAmmoRemaining > 0)
 		{
 			_ammoRemaining[_selectedColor] -= 1;
 			Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;

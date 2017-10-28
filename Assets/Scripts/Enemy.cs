@@ -86,9 +86,19 @@ public class Enemy : MonoBehaviour
 					float angle = Mathf.Atan2 (targetDirection.y, targetDirection.x) * Mathf.Rad2Deg - 90f;
 					//quaternion to find desired rotation
 					Quaternion q = Quaternion.AngleAxis (angle, Vector3.forward);
-					transform.rotation = Quaternion.RotateTowards (transform.rotation, q, 180);
+					// transform.rotation = Quaternion.RotateTowards (transform.rotation, q, 180);
 					//move enemy
-					transform.Translate (Vector3.up * Time.deltaTime * speed);
+					Vector3 direction = (_playerObj.transform.position - transform.position).normalized;
+                    if (direction.x < 0)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 180, 0);
+                    }
+                    else if (direction.x > 0)
+                    {
+                        transform.localRotation = Quaternion.Euler(0, 0, 0);
+                    }
+					direction.x = Mathf.Abs(direction.x);
+					transform.Translate (direction * Time.deltaTime * speed);
 				} else {
 					if (Mathf.Abs (transform.position.y - _target.position.y) < 1.5F) {
 						if (IsGrounded ()) {

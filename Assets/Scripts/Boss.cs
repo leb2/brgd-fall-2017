@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class Boss : MonoBehaviour {
+public class Boss : Enemy {
 
 	// Use this for initialization
 	void Start () {

@@ -108,7 +108,7 @@ public class PlayerMovement : MonoBehaviour {
 			bulletScript.Color = _selectedColor;
 			Rigidbody2D bulletBody = b.GetComponent<Rigidbody2D>();
 			bulletBody.velocity = direction * bulletSpeed;
-
+			bulletScript.TargetTag = "Enemy";
 			UpdateAmmoText();
 
 			Destroy(b, 2);

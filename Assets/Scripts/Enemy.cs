@@ -47,8 +47,8 @@ public class Enemy : MonoBehaviour
 	private float _canMoveTimer = 0F;
 	
 	// Use this for initialization
-	void Start () {
-		_currentHealth = this.MaxHealth;
+	public void Start () {
+		_currentHealth = MaxHealth;
 		_playerObj = GameObject.FindGameObjectWithTag("Player");
 		_target = _playerObj.transform;
 		_collider = GetComponent<Collider2D>();
@@ -107,8 +107,7 @@ public class Enemy : MonoBehaviour
 	
 	public void TakeDamage(float baseDamage, Color sourceColor)
 	{
-		Debug.Log("Taking damage: " + baseDamage);
-		Debug.Log("Health remaining: " + this._currentHealth);
+		Debug.Log("Health: " + _currentHealth);
 		float damage;
 		if (this.Color == sourceColor) {
 			damage = baseDamage;
@@ -118,6 +117,8 @@ public class Enemy : MonoBehaviour
 		} else {
 			damage = baseDamage / this.AdvantageFactor;
 		}
+		Debug.Log("Taking damage: " + damage);
+		Debug.Log("Health remaining: " + this._currentHealth);
 
 		this._currentHealth -= damage;
 		if (this._currentHealth <= 0)

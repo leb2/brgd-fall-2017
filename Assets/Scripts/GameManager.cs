@@ -37,7 +37,6 @@ public class GameManager : MonoBehaviour {
 		Time.timeScale = 1;
 
 		pauseScreen.gameObject.SetActive(false);
-		mainMenu.gameObject.SetActive(true);
 	}
 
 	void Update()

@@ -17,8 +17,7 @@ public class Boss : Enemy
 	{
 		base.Start();
 		_playerObj = GameObject.FindGameObjectWithTag("Player");
-		StartCoroutine (ShootPlayer ());
-		
+		StartCoroutine (ShootPlayer ());	
 	}
 
 
@@ -46,6 +45,8 @@ public class Boss : Enemy
 	
 	// Update is called once per frame
 	void Update () {
-		
+		if (GameManager.Instance.IsDead) {
+			Destroy (this.gameObject);
+		}
 	}
 }

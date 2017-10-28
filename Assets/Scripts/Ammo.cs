@@ -57,7 +57,6 @@ public class Ammo : MonoBehaviour
 		transform.position += direction.normalized * _speed;
 		
 		_speed += Acceleration;
-		Debug.Log(_speed);
 	}
 	
 	void OnTriggerEnter2D(Collider2D other)

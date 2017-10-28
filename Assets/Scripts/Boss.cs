@@ -13,9 +13,12 @@ public class Boss : Enemy
 	
 
 	// Use this for initialization
-	void Start () {
+	void Start ()
+	{
+		base.Start();
 		_playerObj = GameObject.FindGameObjectWithTag("Player");
 		StartCoroutine (ShootPlayer ());
+		
 	}
 
 
@@ -31,7 +34,7 @@ public class Boss : Enemy
                 Rigidbody2D bulletBody = bulletObj.GetComponent<Rigidbody2D>();
 				
 				bulletScript.TargetTag = "Player";
-				Vector3 direction = _playerObj.transform.position - transform.position;
+				Vector3 direction = (_playerObj.transform.position - transform.position).normalized;
 				
 				
                 bulletBody.velocity = direction * BulletSpeed;

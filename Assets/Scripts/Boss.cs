@@ -34,7 +34,7 @@ public class Boss : Enemy
                 Rigidbody2D bulletBody = bulletObj.GetComponent<Rigidbody2D>();
 				
 				bulletScript.TargetTag = "Player";
-				Vector3 direction = (_playerObj.transform.position - transform.position).normalized;
+				Vector3 direction = (_playerObj.transform.position - transform.position + Vector3.up * 3).normalized;
 				
 				
                 bulletBody.velocity = direction * BulletSpeed;

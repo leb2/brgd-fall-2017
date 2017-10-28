@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using System;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -11,6 +12,9 @@ public class Bullet : MonoBehaviour
 	public Sprite blueSprite;
 	public Sprite redSprite;
 	public Sprite greenSprite;
+	public Sprite EnemyBulletSprite;
+
+	public String TargetTag = "Enemy";
 
 	// Use this for initialization
 	void Start () {
@@ -29,12 +33,22 @@ public class Bullet : MonoBehaviour
 		}
 	}
 	
-	void OnCollisionEnter2D(Collision2D other)
+	// void OnCollisionEnter2D(Collision2D other)
+	void OnTriggerEnter2D(Collider2D other)
 	{
-		if (other.gameObject.CompareTag("Enemy"))
+		if (other.gameObject.CompareTag(TargetTag))
 		{
-            Enemy otherEnemy = (Enemy) other.gameObject.GetComponent(typeof(Enemy));
-            otherEnemy.TakeDamage(this.Damage, this.Color);
+			if ((TargetTag) == "Enemy")
+			{
+				Enemy otherEnemy = (Enemy) other.gameObject.GetComponent(typeof(Enemy));
+                otherEnemy.TakeDamage(this.Damage, this.Color);
+			}
+			else if ((TargetTag) == "Player")
+			{
+				PlayerMovement player = (PlayerMovement) other.gameObject.GetComponent(typeof(PlayerMovement));
+				player.takeDamage();
+			}
+			Destroy(gameObject);
 		}
 	}
 }

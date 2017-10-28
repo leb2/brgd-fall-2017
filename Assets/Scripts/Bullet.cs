@@ -19,7 +19,11 @@ public class Bullet : MonoBehaviour
 	// Use this for initialization
 	void Start () {
 		SpriteRenderer sr = GetComponent<SpriteRenderer>();
-		if (Color == Color.Blue)
+		if (TargetTag == "Player")
+		{
+			sr.sprite = EnemyBulletSprite;
+		}
+		else if (Color == Color.Blue)
 		{
 			sr.sprite = blueSprite;
 		}

@@ -18,6 +18,7 @@ public class AmmoTail : MonoBehaviour
 	private float distToGround;
 	private float nextJump = 0.0F;
 	private GameObject _playerObj;
+	public bool isHead = false;
 
 	// Use this for initialization
 	void Start () {

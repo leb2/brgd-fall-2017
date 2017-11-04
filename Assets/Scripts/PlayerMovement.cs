@@ -32,7 +32,7 @@ public class PlayerMovement : MonoBehaviour {
 	
 	public RectTransform healthBar;
 	public List<Color> Ammo = new List<Color>();
-	private int _numTail = 0;
+	private int _tailSize = 0;
 	
 	// Points to last ammo in the ammo tail
 	private GameObject _lastTail = null;
@@ -64,12 +64,12 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 
-		if (_numTail < 5)
+		if (_tailSize < 5)
 		{
             Rigidbody2D connectedBody;
             Vector3 spawnLocation;
 			GameObject target;
-            _numTail += 1;
+            _tailSize += 1;
             if (_lastTail == null)
             {
                 Debug.Log("IS NULL");
@@ -90,6 +90,10 @@ public class PlayerMovement : MonoBehaviour {
 			if (_lastTail != null)
 			{
 				ammoScript.JumpThreshold = ammoScript.JumpThreshold / 2;
+			}
+			else
+			{
+				ammoScript.isHead = true;
 			}
 			ammoScript.target = target;
 //            ammoTailUnit.transform.parent = transform;
@@ -157,22 +161,33 @@ public class PlayerMovement : MonoBehaviour {
 
 		//bullet functionality
 		int currentAmmoRemaining = _ammoRemaining[_selectedColor];
-		
 		if (Input.GetKeyDown (KeyCode.Mouse0) && currentAmmoRemaining > 0)
 		{
-			_ammoRemaining[_selectedColor] -= 1;
-			Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-			
-			GameObject b = (GameObject)(Instantiate (bullet, transform.position + direction * 1.2F, Quaternion.identity));
-			Bullet bulletScript = b.GetComponent(typeof(Bullet)) as Bullet;
-			bulletScript.Color = _selectedColor;
-			Rigidbody2D bulletBody = b.GetComponent<Rigidbody2D>();
-			bulletBody.velocity = direction * bulletSpeed;
-			bulletScript.TargetTag = "Enemy";
-			UpdateAmmoText();
-
-			Destroy(b, 2);
+			shoot();
 		}
+	}
+
+	private void shoot()
+	{
+        _ammoRemaining[_selectedColor] -= 1;
+        Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
+        
+        GameObject b = (GameObject)(Instantiate (bullet, transform.position + direction * 1.2F, Quaternion.identity));
+        Bullet bulletScript = b.GetComponent(typeof(Bullet)) as Bullet;
+        bulletScript.Color = _selectedColor;
+        Rigidbody2D bulletBody = b.GetComponent<Rigidbody2D>();
+        bulletBody.velocity = direction * bulletSpeed;
+        bulletScript.TargetTag = "Enemy";
+        UpdateAmmoText();
+		
+		// Remove ammo from ammo tail
+		AmmoTail ammoTailScript = _lastTail.GetComponent(typeof(AmmoTail)) as AmmoTail;
+		Destroy(_lastTail);
+		_tailSize -= 1;
+		
+		_lastTail = ammoTailScript.isHead ? null : ammoTailScript.target;
+		
+        Destroy(b, 2);
 	}
 
 	private void UpdateAmmoText()

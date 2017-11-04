@@ -24,12 +24,19 @@ public class PlayerMovement : MonoBehaviour {
 
 	//player health
 	public GameObject bullet;
+	public GameObject ammotail;
+	
 	public float MaxHealth = 100f;
 	public float currentHealth; 
 	public float healthDamage = 20f;
 	
 	public RectTransform healthBar;
-
+	public List<Color> Ammo = new List<Color>();
+	private int _numTail = 0;
+	
+	// Points to last ammo in the ammo tail
+	private GameObject _lastTail = null;
+	
 	private void Start()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
@@ -46,11 +53,54 @@ public class PlayerMovement : MonoBehaviour {
 		this.currentHealth = this.MaxHealth;
 		GameManager.Instance.IsDead = false;
 	}
-
+	
 	public void AddAmmo(Color color, int amount)
 	{
 		_ammoRemaining[color] += amount;
 		_ammoRemaining[color] = Math.Min(_ammoRemaining[color], 10);
+		for (int i = 0; i < amount; i++)
+		{
+            Ammo.Add(color);
+		}
+
+
+		if (_numTail < 5)
+		{
+            Rigidbody2D connectedBody;
+            Vector3 spawnLocation;
+			GameObject target;
+            _numTail += 1;
+            if (_lastTail == null)
+            {
+                Debug.Log("IS NULL");
+                connectedBody = rigidbody;
+	            target = gameObject;
+                spawnLocation = transform.position;
+            }
+            else
+            {
+                Debug.Log("NOT NULL");
+                connectedBody = _lastTail.GetComponent<Rigidbody2D>();
+	            target = _lastTail;
+                spawnLocation = _lastTail.transform.position;
+            }
+            GameObject ammoTailUnit = (GameObject)(Instantiate (ammotail, spawnLocation, Quaternion.identity));
+			AmmoTail ammoScript = ammoTailUnit.GetComponent(typeof(AmmoTail)) as AmmoTail;
+
+			if (_lastTail != null)
+			{
+				ammoScript.JumpThreshold = ammoScript.JumpThreshold / 2;
+			}
+			ammoScript.target = target;
+//            ammoTailUnit.transform.parent = transform;
+			
+//            SpringJoint2D springJoint = ammoTailUnit.GetComponent<SpringJoint2D>();
+//            springJoint.connectedBody = connectedBody;
+//            springJoint.distance = 0.8F;
+			
+            _lastTail = ammoTailUnit;
+		}
+		
 		UpdateAmmoText();
 	}
 
@@ -75,14 +125,15 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 		rigidbody.velocity = new Vector2(moveHorizontal * speed, yVelocity);
-		if (moveHorizontal < 0)
-		{
-			transform.localRotation = Quaternion.Euler(0, 180, 0);
-		}
-		else if (moveHorizontal > 0)
-		{
-			transform.localRotation = Quaternion.Euler(0, 0, 0);
-		}
+		// TODO: Change sprite rotation not transform rotation
+//		if (moveHorizontal < 0)
+//		{
+//			transform.localRotation = Quaternion.Euler(0, 180, 0);
+//		}
+//		else if (moveHorizontal > 0)
+//		{
+//			transform.localRotation = Quaternion.Euler(0, 0, 0);
+//		}
 		
 
 		if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))

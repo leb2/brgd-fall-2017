@@ -9,7 +9,7 @@ public enum Color { Red, Blue, Green };
 public class Enemy : MonoBehaviour
 {
 	// Maps each color the color that it has advantage over
-	public static IDictionary<Color, Color> AdvantageCircle =new Dictionary<Color, Color>()
+	public static IDictionary<Color, Color> AdvantageCircle = new Dictionary<Color, Color>()
 	{
 		{Color.Red, Color.Green},
 		{Color.Green, Color.Blue},

@@ -15,10 +15,13 @@ public class Bullet : MonoBehaviour
 	public Sprite EnemyBulletSprite;
 
 	public String TargetTag = "Enemy";
+	private Rigidbody2D rigidbody;
 
 	// Use this for initialization
 	void Start () {
 		SpriteRenderer sr = GetComponent<SpriteRenderer>();
+		rigidbody = GetComponent<Rigidbody2D>();
+		
 		if (TargetTag == "Player")
 		{
 			sr.sprite = EnemyBulletSprite;
@@ -35,6 +38,11 @@ public class Bullet : MonoBehaviour
 		{
 			sr.sprite = greenSprite;
 		}
+	}
+	
+	void Update ()
+	{
+		transform.localRotation = Quaternion.Euler(rigidbody.velocity);
 	}
 	
 	// void OnCollisionEnter2D(Collision2D other)

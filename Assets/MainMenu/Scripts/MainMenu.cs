@@ -14,12 +14,12 @@ public class MainMenu : MonoBehaviour {
 		Time.timeScale = 0;
 
 		//buttons
-		if (GUI.Button (new Rect(Screen.width*.25f, Screen.height * .35f, Screen.width * .5f, Screen.height * .1f), "Play game")) {
+		if (GUI.Button (new Rect(Screen.width*0.10f, Screen.height * .30f, Screen.width * .15f, Screen.height * .1f), "Play game")) {
 			Application.LoadLevel ("Scene");
 			Time.timeScale = 1;
 		};
 
-		if (GUI.Button (new Rect(Screen.width*.25f, Screen.height * .5f, Screen.width * .5f, Screen.height * .1f), "Quit")) {
+		if (GUI.Button (new Rect(Screen.width*.74f, Screen.height * .30f, Screen.width * .15f, Screen.height * .1f), "Quit")) {
 			Application.Quit();
 		};
 	}

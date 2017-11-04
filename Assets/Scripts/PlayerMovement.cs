@@ -63,24 +63,21 @@ public class PlayerMovement : MonoBehaviour {
             Ammo.Add(color);
 		}
 
-
 		if (_tailSize < 5)
 		{
             Rigidbody2D connectedBody;
             Vector3 spawnLocation;
 			GameObject target;
             _tailSize += 1;
-            if (_lastTail == null)
+			
+			// Create a new tail element and have it "follow" the previous end of the tail
+            if (_lastTail == null) // No last tail, follow player instead
             {
-                Debug.Log("IS NULL");
-                connectedBody = rigidbody;
 	            target = gameObject;
                 spawnLocation = transform.position;
             }
             else
             {
-                Debug.Log("NOT NULL");
-                connectedBody = _lastTail.GetComponent<Rigidbody2D>();
 	            target = _lastTail;
                 spawnLocation = _lastTail.transform.position;
             }
@@ -96,12 +93,6 @@ public class PlayerMovement : MonoBehaviour {
 				ammoScript.isHead = true;
 			}
 			ammoScript.target = target;
-//            ammoTailUnit.transform.parent = transform;
-			
-//            SpringJoint2D springJoint = ammoTailUnit.GetComponent<SpringJoint2D>();
-//            springJoint.connectedBody = connectedBody;
-//            springJoint.distance = 0.8F;
-			
             _lastTail = ammoTailUnit;
 		}
 		
@@ -130,14 +121,14 @@ public class PlayerMovement : MonoBehaviour {
 
 		rigidbody.velocity = new Vector2(moveHorizontal * speed, yVelocity);
 		// TODO: Change sprite rotation not transform rotation
-//		if (moveHorizontal < 0)
-//		{
-//			transform.localRotation = Quaternion.Euler(0, 180, 0);
-//		}
-//		else if (moveHorizontal > 0)
-//		{
-//			transform.localRotation = Quaternion.Euler(0, 0, 0);
-//		}
+		if (moveHorizontal < 0)
+		{
+			transform.localRotation = Quaternion.Euler(0, 180, 0);
+		}
+		else if (moveHorizontal > 0)
+		{
+			transform.localRotation = Quaternion.Euler(0, 0, 0);
+		}
 		
 
 		if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))

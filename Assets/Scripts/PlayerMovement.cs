@@ -84,6 +84,7 @@ public class PlayerMovement : MonoBehaviour {
             }
             GameObject ammoTailUnit = (GameObject)(Instantiate (ammotail, spawnLocation, Quaternion.identity));
 			AmmoTail ammoScript = ammoTailUnit.GetComponent(typeof(AmmoTail)) as AmmoTail;
+			ammoScript.color = color;
 
 			if (_lastTail != null) // Adding new tail element to existing tail
 			{
@@ -120,6 +121,7 @@ public class PlayerMovement : MonoBehaviour {
 		{
             GameObject ammoTailUnit = (GameObject)(Instantiate (ammotail, spawnLocation, Quaternion.identity));
 			AmmoTail ammoScript = ammoTailUnit.GetComponent(typeof(AmmoTail)) as AmmoTail;
+			ammoScript.color = color;
 			ammoScript.target = target;
 
 			if (!first)

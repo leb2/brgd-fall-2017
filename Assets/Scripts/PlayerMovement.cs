@@ -169,6 +169,11 @@ public class PlayerMovement : MonoBehaviour {
 	
 	private void Update()
 	{
+		if (transform.position.y < -4F)
+		{
+			GetComponent<Collider2D>().isTrigger = false;
+		}
+		
 		float moveVertical = Input.GetAxisRaw("Vertical");
 		float moveHorizontal = Input.GetAxisRaw("Horizontal");
 
@@ -188,6 +193,11 @@ public class PlayerMovement : MonoBehaviour {
 		else if (moveHorizontal > 0)
 		{
 			GetComponent<SpriteRenderer>().flipX = false;
+		}
+
+		if (moveVertical < 0 && transform.position.y > -4F)
+		{
+			GetComponent<Collider2D>().isTrigger = true;
 		}
 		
 
@@ -225,6 +235,11 @@ public class PlayerMovement : MonoBehaviour {
 		_lastTail = ammoTailScript.isHead ? null : ammoTailScript.target;
 		
         Destroy(b, 2);
+	}
+
+	private void OnTriggerExit2D(Collider2D other)
+	{
+		GetComponent<Collider2D>().isTrigger = false;
 	}
 
 	private void UpdateAmmoText()

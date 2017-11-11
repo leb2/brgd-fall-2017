@@ -11,10 +11,8 @@ public class Boss : Enemy
 	public float BulletSpeed = 80F;
 
 	private GameObject _playerObj;
-<<<<<<< HEAD
 	public GameObject bossPrefab;
 	public float minSize = 0.20f;
-=======
 	private bool _shieldUp = true;
 	private float minX;
 	private float maxX;

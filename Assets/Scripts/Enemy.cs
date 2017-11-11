@@ -140,7 +140,7 @@ public class Enemy : MonoBehaviour
 	public void moveBack()
 	{
 		Debug.Log("moving back");
-		rigidbody.AddForce(new Vector3(50f, 50f, 0f), ForceMode2D.Impulse);
+		rigidbody.AddForce(new Vector3(30f, 30f, 0f), ForceMode2D.Impulse);
 	}
 
 	public void Die()

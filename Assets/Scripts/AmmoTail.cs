@@ -31,6 +31,10 @@ public class AmmoTail : MonoBehaviour
 	// Update is called once per frame
 	void Update ()
 	{
+		if (transform.position.y < -4F)
+		{
+			GetComponent<Collider2D>().isTrigger = false;
+		}
 
 		float xSpeed = 0F;
 		float ySpeed = rigidbody.velocity.y;
@@ -53,9 +57,19 @@ public class AmmoTail : MonoBehaviour
 				ySpeed = JumpSpeed;
 			}
 		}
+
+		// Fall through platforms when low enough
+		if (transform.position.y + JumpThreshold  > target.transform.position.y && transform.position.y > -4F)
+		{
+			GetComponent<Collider2D>().isTrigger = true;
+		}
+		
         rigidbody.velocity = new Vector2(xSpeed, ySpeed);
-		
-		
+	}
+	
+	private void OnTriggerExit2D(Collider2D other)
+	{
+		GetComponent<Collider2D>().isTrigger = false;
 	}
 	
 	private bool IsGrounded()

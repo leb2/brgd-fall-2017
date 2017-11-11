@@ -37,10 +37,12 @@ public class AmmoTail : MonoBehaviour
 		
 		if (transform.position.x + FollowDistance < target.transform.position.x)
 		{
+			GetComponent<SpriteRenderer>().flipX = false;
 			xSpeed = Speed;
 			
 		} else if (transform.position.x - FollowDistance > target.transform.position.x)
 		{
+			GetComponent<SpriteRenderer>().flipX = true;
 			xSpeed = -Speed;
 		}
 		if (transform.position.y + JumpThreshold < target.transform.position.y)
@@ -52,6 +54,8 @@ public class AmmoTail : MonoBehaviour
 			}
 		}
         rigidbody.velocity = new Vector2(xSpeed, ySpeed);
+		
+		
 	}
 	
 	private bool IsGrounded()

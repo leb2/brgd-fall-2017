@@ -52,6 +52,7 @@ public class PlayerMovement : MonoBehaviour {
 		UpdateAmmoText();
 		this.currentHealth = this.MaxHealth;
 		GameManager.Instance.IsDead = false;
+		initializeAmmoTail();
 	}
 	
 	public void AddAmmo(Color color, int amount)
@@ -84,7 +85,7 @@ public class PlayerMovement : MonoBehaviour {
             GameObject ammoTailUnit = (GameObject)(Instantiate (ammotail, spawnLocation, Quaternion.identity));
 			AmmoTail ammoScript = ammoTailUnit.GetComponent(typeof(AmmoTail)) as AmmoTail;
 
-			if (_lastTail != null)
+			if (_lastTail != null) // Adding new tail element to existing tail
 			{
 				ammoScript.JumpThreshold = ammoScript.JumpThreshold / 2;
 			}
@@ -97,6 +98,65 @@ public class PlayerMovement : MonoBehaviour {
 		}
 		
 		UpdateAmmoText();
+	}
+	
+	private void initializeAmmoTail()
+	{
+		// Destroy previous tail
+		GameObject head = _lastTail;
+		while (head != null && head != gameObject)
+		{
+			Destroy(head);
+			AmmoTail ammoScript = head.GetComponent(typeof(AmmoTail)) as AmmoTail;
+			head = ammoScript.target;
+		}
+		
+		Color color = _selectedColor;
+		int number = _ammoRemaining[color];
+		Vector3 spawnLocation = transform.position;
+		GameObject target = gameObject;
+		bool first = true;
+		for (int i = 0; i < number; i++)
+		{
+            GameObject ammoTailUnit = (GameObject)(Instantiate (ammotail, spawnLocation, Quaternion.identity));
+			AmmoTail ammoScript = ammoTailUnit.GetComponent(typeof(AmmoTail)) as AmmoTail;
+			ammoScript.target = target;
+
+			if (!first)
+			{
+				ammoScript.JumpThreshold = ammoScript.JumpThreshold / 2;
+			}
+			else
+			{
+				ammoScript.isHead = true;
+			}
+			
+			spawnLocation = new Vector3(spawnLocation.x - (i + 1), spawnLocation.y, spawnLocation.z);
+			target = ammoTailUnit;
+			_lastTail = ammoTailUnit;
+            first = false;
+		}
+	}
+
+	
+	private void SwitchAmmo(Color color)
+	{
+		_selectedColor = color; 
+        switch (_selectedColor)
+        {
+            case Color.Blue:
+                CurrentAmmoText.text = "Ammo: Blue";
+                break;
+            case Color.Green:
+                CurrentAmmoText.text = "Ammo: Green";
+                break;
+            case Color.Red:
+                CurrentAmmoText.text = "Ammo: Red";
+                break;
+            default:
+                throw new ArgumentOutOfRangeException();
+        }
+		initializeAmmoTail();
 	}
 
 	private bool IsGrounded()
@@ -123,31 +183,17 @@ public class PlayerMovement : MonoBehaviour {
 		// TODO: Change sprite rotation not transform rotation
 		if (moveHorizontal < 0)
 		{
-			transform.localRotation = Quaternion.Euler(0, 180, 0);
+			GetComponent<SpriteRenderer>().flipX = true;
 		}
 		else if (moveHorizontal > 0)
 		{
-			transform.localRotation = Quaternion.Euler(0, 0, 0);
+			GetComponent<SpriteRenderer>().flipX = false;
 		}
 		
 
 		if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetKeyDown(KeyCode.RightShift))
 		{
-			_selectedColor = Enemy.AdvantageCircle[_selectedColor];
-			switch (_selectedColor)
-			{
-				case Color.Blue:
-					CurrentAmmoText.text = "Ammo: Blue";
-					break;
-				case Color.Green:
-					CurrentAmmoText.text = "Ammo: Green";
-					break;
-                case Color.Red:
-	                CurrentAmmoText.text = "Ammo: Red";
-	                break;
-				default:
-					throw new ArgumentOutOfRangeException();
-			}
+			SwitchAmmo(Enemy.AdvantageCircle[_selectedColor]);
 		}
 
 		//bullet functionality

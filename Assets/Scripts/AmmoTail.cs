@@ -51,6 +51,8 @@ public class AmmoTail : MonoBehaviour
 		}
 		if (transform.position.y + JumpThreshold < target.transform.position.y)
 		{
+			Debug.Log("Trying to jump");
+			Debug.Log("Is grounded: " + IsGrounded());
 			if (IsGrounded() && Time.time > nextJump)
 			{
 				nextJump = Time.time + jumpInterval;
@@ -58,8 +60,8 @@ public class AmmoTail : MonoBehaviour
 			}
 		}
 
-		// Fall through platforms when low enough
-		if (transform.position.y - JumpThreshold / 2> target.transform.position.y && transform.position.y > -4F && IsGrounded())
+//		 Fall through platforms when low enough
+		if (transform.position.y - JumpThreshold / 2 > target.transform.position.y && transform.position.y > -4F && IsGrounded())
 		{
 			GetComponent<Collider2D>().isTrigger = true;
 		}
@@ -74,8 +76,8 @@ public class AmmoTail : MonoBehaviour
 	
 	private bool IsGrounded()
 	{
-		Vector2 top_left = new Vector2(transform.position.x - 0.1F, transform.position.y - distToGround);
-		Vector2 bot_right = new Vector2(transform.position.x + 0.1F, transform.position.y - distToGround - 0.1F);
+		Vector2 top_left = new Vector2(transform.position.x - 0.3F, transform.position.y - distToGround);
+		Vector2 bot_right = new Vector2(transform.position.x + 0.3F, transform.position.y - distToGround - 0.3F);
 		return Physics2D.OverlapArea(top_left, bot_right, groundLayers);    
 	}
 }

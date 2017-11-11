@@ -36,7 +36,7 @@ public class Enemy : MonoBehaviour
 
 	//enemy movement 
 
-	private float _currentHealth;
+	public float _currentHealth;
 	public GameObject Ammo;
 	private float _distToGround;
 	public LayerMask groundLayers;
@@ -143,7 +143,7 @@ public class Enemy : MonoBehaviour
 		rigidbody.AddForce(new Vector3(30f, 30f, 0f), ForceMode2D.Impulse);
 	}
 
-	public void Die()
+	public virtual void Die()
 	{
 		Destroy(this.gameObject);
 		for (int i = 0; i < NumAmmoDrop; i++)

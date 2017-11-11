@@ -10,14 +10,15 @@ public class Boss : Enemy
 	public float BulletSpeed = 80F;
 
 	private GameObject _playerObj;
-	
+	public GameObject bossPrefab;
+	public float minSize = 0.20f;
 
 	// Use this for initialization
 	void Start ()
 	{
 		base.Start();
 		_playerObj = GameObject.FindGameObjectWithTag("Player");
-		StartCoroutine (ShootPlayer ());	
+		StartCoroutine (ShootPlayer ());
 	}
 
 
@@ -49,4 +50,20 @@ public class Boss : Enemy
 			Destroy (this.gameObject);
 		}
 	}
+
+	public override void Die()
+	{
+		if (transform.localScale.y > minSize) 
+		{
+			GameObject clone1 = Instantiate(bossPrefab, new Vector3(transform.position.x + 0.5f, transform.position.y, transform.position.z), Quaternion.identity);
+			GameObject clone2 = Instantiate(bossPrefab, new Vector3(transform.position.x - 0.5f, transform.position.y, transform.position.z), Quaternion.identity);
+
+			clone1.transform.localScale = new Vector3 (transform.localScale.x * 0.5f, transform.localScale.y * 0.5f, transform.localScale.z);
+			clone2.transform.localScale = new Vector3 (transform.localScale.x * 0.5f, transform.localScale.y * 0.5f, transform.localScale.z);
+
+		}
+
+		Destroy(this.gameObject);
+	}
+
 }

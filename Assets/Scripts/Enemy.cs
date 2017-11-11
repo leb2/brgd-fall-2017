@@ -84,8 +84,6 @@ public class Enemy : MonoBehaviour
 				if (isFlyingEnemy) {
 					//turn towards target and chase it
 					float angle = Mathf.Atan2 (targetDirection.y, targetDirection.x) * Mathf.Rad2Deg - 90f;
-					//quaternion to find desired rotation
-					Quaternion q = Quaternion.AngleAxis (angle, Vector3.forward);
 					// transform.rotation = Quaternion.RotateTowards (transform.rotation, q, 180);
 					//move enemy
 					Vector3 direction = (_playerObj.transform.position - transform.position).normalized;
@@ -127,14 +125,22 @@ public class Enemy : MonoBehaviour
 		} else {
 			damage = baseDamage / this.AdvantageFactor;
 		}
+		this._currentHealth -= damage;
+		StartCoroutine("moveBack");
+		//moveBack();
 		Debug.Log("Taking damage: " + damage);
 		Debug.Log("Health remaining: " + this._currentHealth);
 
-		this._currentHealth -= damage;
 		if (this._currentHealth <= 0)
 		{
 			this.Die();
 		}
+	}
+
+	public void moveBack()
+	{
+		Debug.Log("moving back");
+		rigidbody.AddForce(new Vector3(50f, 50f, 0f), ForceMode2D.Impulse);
 	}
 
 	public void Die()

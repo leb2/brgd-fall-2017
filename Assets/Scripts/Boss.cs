@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using NUnit.Framework.Constraints;
 using UnityEngine;
 
 public class Boss : Enemy
@@ -10,23 +11,37 @@ public class Boss : Enemy
 	public float BulletSpeed = 80F;
 
 	private GameObject _playerObj;
+<<<<<<< HEAD
 	public GameObject bossPrefab;
 	public float minSize = 0.20f;
+=======
+	private bool _shieldUp = true;
+	private float minX;
+	private float maxX;
+	private float startX;
+	
 
 	// Use this for initialization
 	void Start ()
 	{
 		base.Start();
+		speed = speed / 2;
 		_playerObj = GameObject.FindGameObjectWithTag("Player");
 		StartCoroutine (ShootPlayer ());
+		startX = transform.position.x;
+		maxX = startX + 5F;
+		minX = startX - 5F;
 	}
-
+	
 
 	IEnumerator ShootPlayer()
 	{
+		Rigidbody2D rigidbody = GetComponent<Rigidbody2D>();
 		yield return new WaitForSeconds(TimeBetweenWaves);
 		while (true)
 		{
+			_shieldUp = false;
+			
 			for (int i = 0; i < NumShots; i++)
 			{
 				GameObject bulletObj = Instantiate(bullet, transform.position, Quaternion.identity);
@@ -40,12 +55,30 @@ public class Boss : Enemy
                 bulletBody.velocity = direction * BulletSpeed;
 				yield return new WaitForSeconds(TimeBetweenShots);
 			}
+			_shieldUp = true;
 			yield return new WaitForSeconds(TimeBetweenWaves);
 		}
 	}
+
+	public override void TakeDamage(float baseDamage, Color sourceColor)
+	{
+		if (!_shieldUp)
+		{
+            base.TakeDamage(baseDamage, sourceColor);
+		}
+		Debug.Log("Testingladflaksjdf");
+	}
 	
 	// Update is called once per frame
-	void Update () {
+	public override void Update ()
+	{
+
+		float moveSpeed = _shieldUp ? -speed : speed;
+		float x = transform.position.x;
+		if (x > minX && x < maxX)
+		{
+            rigidbody.velocity = new Vector2(moveSpeed, rigidbody.velocity.y);
+		}
 		if (GameManager.Instance.IsDead) {
 			Destroy (this.gameObject);
 		}

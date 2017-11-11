@@ -60,7 +60,7 @@ public class AmmoTail : MonoBehaviour
 			}
 		}
 
-//		 Fall through platforms when low enough
+		// Fall through platforms when low enough
 		if (transform.position.y - JumpThreshold / 2 > target.transform.position.y && transform.position.y > -4F && IsGrounded())
 		{
 			GetComponent<Collider2D>().isTrigger = true;

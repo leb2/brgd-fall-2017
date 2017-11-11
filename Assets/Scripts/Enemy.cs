@@ -67,7 +67,7 @@ public class Enemy : MonoBehaviour
 	}
 
 	// Update is called once per frame
-	void Update()
+	public virtual void Update()
 	{
 		//only move enemy if time is not 0, i.e. if game is not paused
 		if (!GameManager.Instance.IsDead) {
@@ -113,7 +113,7 @@ public class Enemy : MonoBehaviour
 
 	}
 	
-	public void TakeDamage(float baseDamage, Color sourceColor)
+	public virtual void TakeDamage(float baseDamage, Color sourceColor)
 	{
 		Debug.Log("Health: " + _currentHealth);
 		float damage;

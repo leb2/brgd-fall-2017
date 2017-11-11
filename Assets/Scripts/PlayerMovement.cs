@@ -64,7 +64,7 @@ public class PlayerMovement : MonoBehaviour {
             Ammo.Add(color);
 		}
 
-		if (_tailSize < 5)
+		if (color == _selectedColor)
 		{
             Rigidbody2D connectedBody;
             Vector3 spawnLocation;

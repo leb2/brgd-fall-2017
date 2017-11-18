@@ -62,7 +62,7 @@ public class Enemy : MonoBehaviour
 	{
 		float xRange = _collider.bounds.extents.x;
 		Vector2 top_left = new Vector2(transform.position.x - xRange, transform.position.y - _distToGround);
-		Vector2 bot_right = new Vector2(transform.position.x + xRange, transform.position.y - _distToGround - 0.1F);
+		Vector2 bot_right = new Vector2(transform.position.x + xRange, transform.position.y - _distToGround - 1F);
 		return Physics2D.OverlapArea(top_left, bot_right, groundLayers);    
 	}
 
@@ -102,6 +102,14 @@ public class Enemy : MonoBehaviour
 						if (IsGrounded ()) {
 							float direction = Mathf.Sign (targetDirection.x);
 							rigidbody.velocity = Vector2.right * speed * direction;
+                            if (direction < 0)
+                            {
+                                GetComponent<SpriteRenderer>().flipX = true;
+                            }
+                            else if (direction > 0)
+                            {
+                                GetComponent<SpriteRenderer>().flipX = false;
+                            }
 						}
 					}
 				}

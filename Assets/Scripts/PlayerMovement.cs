@@ -36,7 +36,13 @@ public class PlayerMovement : MonoBehaviour {
 	
 	// Points to last ammo in the ammo tail
 	private GameObject _lastTail = null;
-	
+
+	//audio
+	public AudioClip shootSound;
+	private AudioSource source;
+	private float volLowRange = 0.5f;
+	private float volHighRange = 1.0f;
+
 	private void Start()
 	{
 		rigidbody = GetComponent<Rigidbody2D>();
@@ -53,6 +59,7 @@ public class PlayerMovement : MonoBehaviour {
 		this.currentHealth = this.MaxHealth;
 		GameManager.Instance.IsDead = false;
 		initializeAmmoTail();
+		source = GetComponent<AudioSource> ();
 	}
 	
 	public void AddAmmo(Color color, int amount)
@@ -226,14 +233,17 @@ public class PlayerMovement : MonoBehaviour {
 	{
         _ammoRemaining[_selectedColor] -= 1;
         Vector3 direction = (Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position).normalized;
-        
         GameObject b = (GameObject)(Instantiate (bullet, transform.position + direction * 1.2F, Quaternion.identity));
         Bullet bulletScript = b.GetComponent(typeof(Bullet)) as Bullet;
         bulletScript.Color = _selectedColor;
         Rigidbody2D bulletBody = b.GetComponent<Rigidbody2D>();
         bulletBody.velocity = direction * bulletSpeed;
         bulletScript.TargetTag = "Enemy";
+		source.PlayOneShot (shootSound, volHighRange);
         UpdateAmmoText();
+
+		//float vol = Random.Range (volLowRange, volHighRange);
+		source.PlayOneShot(shootSound,volHighRange);
 		
 		// Remove ammo from ammo tail
 		AmmoTail ammoTailScript = _lastTail.GetComponent(typeof(AmmoTail)) as AmmoTail;

@@ -26,23 +26,26 @@ public class Bullet : MonoBehaviour
 		{
 			sr.sprite = EnemyBulletSprite;
 		}
-		else if (Color == Color.Blue)
-		{
-			sr.sprite = blueSprite;
-		}
-		else if (Color == Color.Red)
-		{
-			sr.sprite = redSprite;
-		}
-		else if (Color == Color.Green)
-		{
-			sr.sprite = greenSprite;
-		}
+//		else if (Color == Color.Blue)
+//		{
+//			sr.sprite = blueSprite;
+//		}
+//		else if (Color == Color.Red)
+//		{
+//			sr.sprite = redSprite;
+//		}
+//		else if (Color == Color.Green)
+//		{
+//			sr.sprite = greenSprite;
+//		}
 	}
 	
 	void Update ()
 	{
-		transform.localRotation = Quaternion.Euler(rigidbody.velocity);
+		Vector2 dir = rigidbody.velocity;
+		float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+		transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+//		transform.localRotation = Quaternion.Euler(rigidbody.velocity);
 	}
 	
 	// void OnCollisionEnter2D(Collision2D other)

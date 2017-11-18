@@ -19,6 +19,7 @@ public class AmmoTail : MonoBehaviour
 	private float nextJump = 0.0F;
 	private GameObject _playerObj;
 	public bool isHead = false;
+	public Color color;
 
 	// Use this for initialization
 	void Start () {
@@ -26,6 +27,19 @@ public class AmmoTail : MonoBehaviour
 		distToGround = collider.bounds.extents.y;
 		rigidbody = GetComponent <Rigidbody2D>();
 		_playerObj = GameObject.FindGameObjectWithTag("Player");
+
+		Animator animator = GetComponent<Animator>();
+		if (color == Color.Red)
+		{
+            animator.Play("Red Animation");
+		} else if (color == Color.Green)
+		{
+			animator.Play("Green Animation");
+		}
+		else
+		{
+			animator.Play("Green Animation");
+		}
 	}
 	
 	// Update is called once per frame

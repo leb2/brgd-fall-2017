@@ -64,7 +64,6 @@ public class Boss : Enemy
 		{
             base.TakeDamage(baseDamage, sourceColor);
 		}
-		Debug.Log("Testingladflaksjdf");
 	}
 	
 	// Update is called once per frame

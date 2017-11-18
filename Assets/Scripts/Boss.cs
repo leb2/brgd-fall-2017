@@ -60,7 +60,7 @@ public class Boss : Enemy
 
 	public override void TakeDamage(float baseDamage, Color sourceColor)
 	{
-		if (!_shieldUp)
+		if (true || !_shieldUp)
 		{
             base.TakeDamage(baseDamage, sourceColor);
 		}
@@ -95,6 +95,12 @@ public class Boss : Enemy
 		}
 
 		Destroy(this.gameObject);
+		for (int i = 0; i < 3; i++)
+		{
+			GameObject ammoObj = (GameObject)(Instantiate (Ammo, transform.position, Quaternion.identity));
+			Ammo ammo = (Ammo) ammoObj.GetComponent(typeof(Ammo));
+			ammo.Color = Color;
+		}
 	}
 
 }

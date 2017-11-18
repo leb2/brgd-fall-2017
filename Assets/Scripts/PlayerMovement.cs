@@ -95,6 +95,7 @@ public class PlayerMovement : MonoBehaviour {
                 else
                 {
                     ammoScript.isHead = true;
+	                ammoScript.FollowDistance += 0.4F;
                 }
                 ammoScript.target = target;
                 _lastTail = ammoTailUnit;
@@ -118,7 +119,7 @@ public class PlayerMovement : MonoBehaviour {
 		
 		Color color = _selectedColor;
 		int number = _ammoRemaining[color];
-		Vector3 spawnLocation = transform.position;
+		Vector3 spawnLocation = new Vector3(transform.position.x - 1, transform.position.y, transform.position.z);
 		GameObject target = gameObject;
 		bool first = true;
 		for (int i = 0; i < number; i++)
@@ -135,6 +136,7 @@ public class PlayerMovement : MonoBehaviour {
 			else
 			{
 				ammoScript.isHead = true;
+                ammoScript.FollowDistance += 0.4F;
 			}
 			
 			spawnLocation = new Vector3(spawnLocation.x - (i + 1), spawnLocation.y, spawnLocation.z);

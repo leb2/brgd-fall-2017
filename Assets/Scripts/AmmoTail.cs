@@ -38,7 +38,7 @@ public class AmmoTail : MonoBehaviour
 		}
 		else
 		{
-			animator.Play("Green Animation");
+			animator.Play("Blue Animation");
 		}
 	}
 	

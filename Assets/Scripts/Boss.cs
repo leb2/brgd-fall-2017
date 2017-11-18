@@ -23,12 +23,11 @@ public class Boss : Enemy
 	void Start ()
 	{
 		base.Start();
-		speed = speed / 2;
 		_playerObj = GameObject.FindGameObjectWithTag("Player");
 		StartCoroutine (ShootPlayer ());
 		startX = transform.position.x;
-		maxX = startX + 5F;
-		minX = startX - 5F;
+		maxX = startX + 10F;
+		minX = startX - 10F;
 	}
 	
 
@@ -72,10 +71,11 @@ public class Boss : Enemy
 
 		float moveSpeed = _shieldUp ? -speed : speed;
 		float x = transform.position.x;
-		if (x > minX && x < maxX)
-		{
-            rigidbody.velocity = new Vector2(moveSpeed, rigidbody.velocity.y);
-		}
+//		if (x > minX && x < maxX)
+//		{
+//			Debug.Log("Trying to move with speed " + moveSpeed);
+			rigidbody.velocity = Vector2.right * moveSpeed;
+//		}
 		if (GameManager.Instance.IsDead) {
 			Destroy (this.gameObject);
 		}

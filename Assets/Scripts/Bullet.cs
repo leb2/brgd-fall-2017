@@ -26,18 +26,18 @@ public class Bullet : MonoBehaviour
 		{
 			sr.sprite = EnemyBulletSprite;
 		}
-		else if (Color == Color.Blue)
-		{
-			sr.sprite = blueSprite;
-		}
-		else if (Color == Color.Red)
-		{
-			sr.sprite = redSprite;
-		}
-		else if (Color == Color.Green)
-		{
-			sr.sprite = greenSprite;
-		}
+//		else if (Color == Color.Blue)
+//		{
+//			sr.sprite = blueSprite;
+//		}
+//		else if (Color == Color.Red)
+//		{
+//			sr.sprite = redSprite;
+//		}
+//		else if (Color == Color.Green)
+//		{
+//			sr.sprite = greenSprite;
+//		}
 	}
 	
 	void Update ()

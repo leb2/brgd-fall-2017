@@ -42,7 +42,10 @@ public class Bullet : MonoBehaviour
 	
 	void Update ()
 	{
-		transform.localRotation = Quaternion.Euler(rigidbody.velocity);
+		Vector2 dir = rigidbody.velocity;
+		float angle = Mathf.Atan2(dir.y, dir.x) * Mathf.Rad2Deg;
+		transform.rotation = Quaternion.AngleAxis(angle, Vector3.forward);
+//		transform.localRotation = Quaternion.Euler(rigidbody.velocity);
 	}
 	
 	// void OnCollisionEnter2D(Collision2D other)

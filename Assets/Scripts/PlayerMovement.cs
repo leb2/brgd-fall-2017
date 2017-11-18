@@ -57,46 +57,50 @@ public class PlayerMovement : MonoBehaviour {
 	
 	public void AddAmmo(Color color, int amount)
 	{
+		if (_ammoRemaining[color] >= 5)
+		{
+			return;
+		}
 		_ammoRemaining[color] += amount;
-		_ammoRemaining[color] = Math.Min(_ammoRemaining[color], 10);
 		for (int i = 0; i < amount; i++)
 		{
             Ammo.Add(color);
-		}
-
-		if (color == _selectedColor)
-		{
-            Rigidbody2D connectedBody;
-            Vector3 spawnLocation;
-			GameObject target;
-            _tailSize += 1;
 			
-			// Create a new tail element and have it "follow" the previous end of the tail
-            if (_lastTail == null) // No last tail, follow player instead
+            if (color == _selectedColor)
             {
-	            target = gameObject;
-                spawnLocation = transform.position;
-            }
-            else
-            {
-	            target = _lastTail;
-                spawnLocation = _lastTail.transform.position;
-            }
-            GameObject ammoTailUnit = (GameObject)(Instantiate (ammotail, spawnLocation, Quaternion.identity));
-			AmmoTail ammoScript = ammoTailUnit.GetComponent(typeof(AmmoTail)) as AmmoTail;
-			ammoScript.color = color;
+                Rigidbody2D connectedBody;
+                Vector3 spawnLocation;
+                GameObject target;
+                _tailSize += 1;
+                
+                // Create a new tail element and have it "follow" the previous end of the tail
+                if (_lastTail == null) // No last tail, follow player instead
+                {
+                    target = gameObject;
+                    spawnLocation = transform.position;
+                }
+                else
+                {
+                    target = _lastTail;
+                    spawnLocation = _lastTail.transform.position;
+                }
+                GameObject ammoTailUnit = (GameObject)(Instantiate (ammotail, spawnLocation, Quaternion.identity));
+                AmmoTail ammoScript = ammoTailUnit.GetComponent(typeof(AmmoTail)) as AmmoTail;
+                ammoScript.color = color;
 
-			if (_lastTail != null) // Adding new tail element to existing tail
-			{
-				ammoScript.JumpThreshold = ammoScript.JumpThreshold / 2;
-			}
-			else
-			{
-				ammoScript.isHead = true;
-			}
-			ammoScript.target = target;
-            _lastTail = ammoTailUnit;
+                if (_lastTail != null) // Adding new tail element to existing tail
+                {
+                    ammoScript.JumpThreshold = ammoScript.JumpThreshold / 2;
+                }
+                else
+                {
+                    ammoScript.isHead = true;
+                }
+                ammoScript.target = target;
+                _lastTail = ammoTailUnit;
+            }
 		}
+
 		
 		UpdateAmmoText();
 	}

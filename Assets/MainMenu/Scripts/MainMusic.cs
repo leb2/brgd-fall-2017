@@ -11,11 +11,11 @@ public class MainMusic : MonoBehaviour {
 	{
 		DontDestroyOnLoad(this.gameObject);
 		source = GetComponent<AudioSource> ();
-		source.PlayOneShot (mainTheme, 1.0f);
+		source.Play();//OneShot (mainTheme, 1.0f);
 	}
 
 	void Update() 
 	{
-		//source.PlayOneShot (mainTheme, 1.0f);
+		
 	}
 }

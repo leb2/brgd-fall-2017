@@ -123,7 +123,7 @@ public class Enemy : MonoBehaviour
 	
 	public virtual void TakeDamage(float baseDamage, Color sourceColor)
 	{
-		Debug.Log("Health: " + _currentHealth);
+//		Debug.Log("Health: " + _currentHealth);
 		float damage;
 		if (this.Color == sourceColor) {
 			damage = baseDamage;
@@ -136,8 +136,8 @@ public class Enemy : MonoBehaviour
 		this._currentHealth -= damage;
 		StartCoroutine("moveBack");
 		//moveBack();
-		Debug.Log("Taking damage: " + damage);
-		Debug.Log("Health remaining: " + this._currentHealth);
+//		Debug.Log("Taking damage: " + damage);
+//		Debug.Log("Health remaining: " + this._currentHealth);
 
 		if (this._currentHealth <= 0)
 		{
@@ -147,7 +147,7 @@ public class Enemy : MonoBehaviour
 
 	public void moveBack()
 	{
-		Debug.Log("moving back");
+//		Debug.Log("moving back");
 		rigidbody.AddForce(new Vector3(30f, 30f, 0f), ForceMode2D.Impulse);
 	}
 

@@ -65,8 +65,8 @@ public class AmmoTail : MonoBehaviour
 		}
 		if (transform.position.y + JumpThreshold < target.transform.position.y)
 		{
-			Debug.Log("Trying to jump");
-			Debug.Log("Is grounded: " + IsGrounded());
+//			Debug.Log("Trying to jump");
+//			Debug.Log("Is grounded: " + IsGrounded());
 			if (IsGrounded() && Time.time > nextJump)
 			{
 				nextJump = Time.time + jumpInterval;

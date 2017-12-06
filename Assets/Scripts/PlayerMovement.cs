@@ -42,6 +42,8 @@ public class PlayerMovement : MonoBehaviour {
 	private AudioSource source;
 	private float volLowRange = 0.5f;
 	private float volHighRange = 1.0f;
+	private Animator _animator;
+	
 
 	private void Start()
 	{
@@ -60,6 +62,7 @@ public class PlayerMovement : MonoBehaviour {
 		GameManager.Instance.IsDead = false;
 		initializeAmmoTail();
 		source = GetComponent<AudioSource> ();
+		_animator = GetComponent<Animator>();
 	}
 	
 	public void AddAmmo(Color color, int amount)
@@ -176,8 +179,8 @@ public class PlayerMovement : MonoBehaviour {
 
 	private bool IsGrounded()
 	{
-		Vector2 top_left = new Vector2(transform.position.x - 0.1F, transform.position.y - distToGround);
-		Vector2 bot_right = new Vector2(transform.position.x + 0.1F, transform.position.y - distToGround - 0.1F);
+		Vector2 top_left = new Vector2(transform.position.x - 0.3F, transform.position.y - distToGround);
+		Vector2 bot_right = new Vector2(transform.position.x + 0.3F, transform.position.y - distToGround - 0.3F);
 		return Physics2D.OverlapArea(top_left, bot_right, groundLayers);    
 	}
 	
@@ -200,7 +203,7 @@ public class PlayerMovement : MonoBehaviour {
 		}
 
 		rigidbody.velocity = new Vector2(moveHorizontal * speed, yVelocity);
-		// TODO: Change sprite rotation not transform rotation
+		
 		if (moveHorizontal < 0)
 		{
 			GetComponent<SpriteRenderer>().flipX = true;
@@ -209,6 +212,9 @@ public class PlayerMovement : MonoBehaviour {
 		{
 			GetComponent<SpriteRenderer>().flipX = false;
 		}
+
+		_animator.SetBool("iswalking", Math.Abs(rigidbody.velocity.x) > 0.01F 
+		                               || Math.Abs(rigidbody.velocity.y) > 0.01F);
 
 		if (moveVertical < 0 && transform.position.y > -4F)
 		{
